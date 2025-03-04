@@ -21,16 +21,11 @@ Get-WinEvent -FilterHashtable @{LogName='Security'; ID=4688} | Where-Object { $_
 ```powershell
 wevtutil qe Microsoft-Windows-Security-Auditing/Operational /q:"*[System[(EventID=4663)]]" /f:text | Select-String "bleachbit"
 ```
-
 #### **4. Look for BleachBit Logs**
 ```powershell
 Get-ChildItem -Path "$env:APPDATA\BleachBit\log" -Recurse
 ```
-
----
-
 ### **Linux**
-
 #### **1. Check If BleachBit Is Installed**
 ```bash
 which bleachbit
@@ -57,9 +52,6 @@ To view logs:
 ```bash
 sudo ausearch -k bleachbit_activity
 ```
-
----
-
 ## **Real-Time Monitoring**
 To actively monitor BleachBit usage, set up real-time alerts:
 
