@@ -157,3 +157,81 @@ Then restart IIS:
 ```powershell
 iisreset
 ```
+
+# Configuring IIS on a Client for Remote Server Management using PowerShell
+
+## Step 1: Install IIS Management Tools on the Client
+
+Run the following PowerShell command as Administrator:
+
+```powershell
+Install-WindowsFeature -Name Web-Mgmt-Console, Web-Mgmt-Tools
+```
+
+## Step 2: Enable IIS Remote Management on the Server
+
+On the remote IIS server, run the following PowerShell commands as Administrator:
+
+```powershell
+# Install IIS Management Service
+Install-WindowsFeature -Name Web-Mgmt-Service
+
+# Enable remote management
+Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\WebManagement\Server -Name EnableRemoteManagement -Value 1
+
+# Start and configure the Web Management Service (WMSVC)
+Start-Service WMSVC
+Set-Service -Name WMSVC -StartupType Automatic
+```
+
+## Step 3: Configure Firewall Rules on the Server
+
+To allow remote IIS management through the firewall, run:
+
+```powershell
+New-NetFirewallRule -DisplayName "IIS Remote Management" -Direction Inbound -Protocol TCP -LocalPort 8172 -Action Allow
+```
+
+## Step 4: Connect to the Remote IIS Server from the Client
+
+On the client machine, open **IIS Manager** and run the following PowerShell command to connect to the remote server:
+
+```powershell
+Start-Process inetmgr
+```
+
+Then manually:
+1. Click **File** > **Connect to a Server**.
+2. Enter the remote server’s IP address or hostname.
+3. Select the authentication method:
+   - Windows Credentials (if using domain authentication).
+   - IIS Manager Credentials (if using IIS-defined users).
+4. Click **Next** and enter the credentials.
+5. Click **Finish**.
+
+## Step 5: Verify the Connection
+
+To check if the IIS Management Service is running on the remote server, run:
+
+```powershell
+Get-Service -Name WMSVC
+```
+
+If you encounter connection issues:
+- Ensure the **Web Management Service** is running:
+
+  ```powershell
+  Restart-Service WMSVC
+  ```
+
+- Verify the firewall rule is properly configured:
+
+  ```powershell
+  Get-NetFirewallRule -DisplayName "IIS Remote Management"
+  ```
+
+- Confirm remote connections are enabled in the **Management Service** settings:
+
+  ```powershell
+  Get-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\WebManagement\Server -Name EnableRemoteManagement
+  ```
