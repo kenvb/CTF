@@ -1,6 +1,4 @@
-# Secure IIS Server - Automated Hardening Script
-# Author: [Your Name]
-# Description: Applies security best practices to IIS
+# Secure IIS Server
 
 ```Powershell
 # Ensure the script runs as Administrator
