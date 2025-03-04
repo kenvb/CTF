@@ -1,4 +1,4 @@
-### Secure IIS Server
+## Secure IIS Server
 
 ```Powershell
 # Ensure the script runs as Administrator
@@ -109,26 +109,33 @@ ModSecurity is an open-source Web Application Firewall (WAF) that helps protect 
   ```
 
 ### Use OWASP Core Rule Set (CRS)
-1. Download **OWASP ModSecurity Core Rule Set (CRS):**  
+* Download **OWASP ModSecurity Core Rule Set (CRS):**  
    - [GitHub OWASP CRS](https://github.com/coreruleset/coreruleset)
-2. Extract the rules into:
+
+* Extract the rules into:
    ```text
    C:\Program Files\ModSecurity\rules\
    ```
-3. Modify `modsecurity.conf` to include CRS rules:
+* Modify `modsecurity.conf` to include CRS rules:
+
    ```ini
    Include "C:\Program Files\ModSecurity\rules\REQUEST-901-INITIALIZATION.conf"
    Include "C:\Program Files\ModSecurity\rules\REQUEST-911-METHOD-ENFORCEMENT.conf"
    Include "C:\Program Files\ModSecurity\rules\REQUEST-933-APPLICATION-ATTACK-PHP.conf"
    ```
+
 ## Enable ModSecurity Logging
+
 To log blocked attacks and security events:
+
 ```ini
 SecAuditEngine RelevantOnly
 SecAuditLog C:\inetpub\logs\modsecurity.log
 SecDebugLogLevel 3
 ```
+
 Restart IIS for the changes to apply:
+
 ```powershell
 iisreset
 ```
@@ -141,10 +148,12 @@ http://yoursite.com/?param=<script>alert('XSS')</script>
 
 ## Fine-Tune ModSecurity Rules
 If false positives occur, disable specific rules in `modsecurity.conf`:
+
 ```ini
 SecRuleRemoveById 949110
 ```
 Then restart IIS:
+
 ```powershell
 iisreset
 ```
