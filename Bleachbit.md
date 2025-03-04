@@ -1,6 +1,82 @@
-# **BleachBit**
-## **Introduction**
+# BleachBit
+## Introduction
 BleachBit is an open-source disk cleaning and privacy tool designed to free up disk space, remove unwanted files, and securely delete sensitive data. It supports both **GUI** and **command-line interface (CLI)** operations, making it a powerful tool for automation.
+
+# Tracking BleachBit Usage
+If you suspect BleachBit is being used to cover tracks, here’s how to detect it.
+
+### Windows
+
+#### 1. Check If BleachBit Is Installed
+```powershell
+Get-Command -Name bleachbit* -ErrorAction SilentlyContinue
+```
+
+#### 2. Check for Recent Execution of BleachBit
+```powershell
+Get-WinEvent -FilterHashtable @{LogName='Security'; ID=4688} | Where-Object { $_.Message -match "bleachbit.exe" }
+```
+
+#### **3. Check for Recent File Deletions**
+```powershell
+wevtutil qe Microsoft-Windows-Security-Auditing/Operational /q:"*[System[(EventID=4663)]]" /f:text | Select-String "bleachbit"
+```
+
+#### **4. Look for BleachBit Logs**
+```powershell
+Get-ChildItem -Path "$env:APPDATA\BleachBit\log" -Recurse
+```
+
+---
+
+### **Linux**
+
+#### **1. Check If BleachBit Is Installed**
+```bash
+which bleachbit
+dpkg -l | grep bleachbit  # Debian-based (Ubuntu)
+rpm -qa | grep bleachbit  # RedHat-based (Fedora, CentOS)
+```
+
+#### **2. Check for Recent Execution**
+```bash
+grep "bleachbit" ~/.bash_history
+```
+
+#### **3. Check System Logs**
+```bash
+journalctl -xe | grep bleachbit
+sudo cat /var/log/syslog | grep bleachbit
+```
+
+#### **4. Monitor BleachBit with Audit Logs**
+```bash
+sudo auditctl -w /usr/bin/bleachbit -p x -k bleachbit_activity
+```
+To view logs:
+```bash
+sudo ausearch -k bleachbit_activity
+```
+
+---
+
+## **Real-Time Monitoring**
+To actively monitor BleachBit usage, set up real-time alerts:
+
+### **Windows (PowerShell - Real-Time Process Monitoring)**
+```powershell
+$filter = @{"EventID"=4688; "Message"="bleachbit.exe" }
+Get-WinEvent -FilterHashtable $filter -MaxEvents 10
+```
+
+### **Linux (Bash - Live Process Monitoring)**
+```bash
+sudo lsof -c bleachbit
+```
+or continuously monitor logs:
+```bash
+tail -f /var/log/syslog | grep bleachbit
+```
 
 ## **Main Features**
 - Deletes temporary files, cache, logs, cookies, and more from various applications (e.g., Firefox, Chrome, LibreOffice, system utilities).
@@ -85,87 +161,3 @@ bleachbit --delete /path/to/file_or_folder
 ```
 This removes a file or folder permanently without additional cleaning.
 
-# **Tracking BleachBit Usage**
-If you suspect BleachBit is being used to cover tracks, here’s how to detect it.
-
-### **Windows**
-
-#### **1. Check If BleachBit Is Installed**
-```powershell
-Get-Command -Name bleachbit* -ErrorAction SilentlyContinue
-```
-
-#### **2. Check for Recent Execution of BleachBit**
-```powershell
-Get-WinEvent -FilterHashtable @{LogName='Security'; ID=4688} | Where-Object { $_.Message -match "bleachbit.exe" }
-```
-
-#### **3. Check for Recent File Deletions**
-```powershell
-wevtutil qe Microsoft-Windows-Security-Auditing/Operational /q:"*[System[(EventID=4663)]]" /f:text | Select-String "bleachbit"
-```
-
-#### **4. Look for BleachBit Logs**
-```powershell
-Get-ChildItem -Path "$env:APPDATA\BleachBit\log" -Recurse
-```
-
----
-
-### **Linux**
-
-#### **1. Check If BleachBit Is Installed**
-```bash
-which bleachbit
-dpkg -l | grep bleachbit  # Debian-based (Ubuntu)
-rpm -qa | grep bleachbit  # RedHat-based (Fedora, CentOS)
-```
-
-#### **2. Check for Recent Execution**
-```bash
-grep "bleachbit" ~/.bash_history
-```
-
-#### **3. Check System Logs**
-```bash
-journalctl -xe | grep bleachbit
-sudo cat /var/log/syslog | grep bleachbit
-```
-
-#### **4. Monitor BleachBit with Audit Logs**
-```bash
-sudo auditctl -w /usr/bin/bleachbit -p x -k bleachbit_activity
-```
-To view logs:
-```bash
-sudo ausearch -k bleachbit_activity
-```
-
----
-
-## **Real-Time Monitoring**
-To actively monitor BleachBit usage, set up real-time alerts:
-
-### **Windows (PowerShell - Real-Time Process Monitoring)**
-```powershell
-$filter = @{"EventID"=4688; "Message"="bleachbit.exe" }
-Get-WinEvent -FilterHashtable $filter -MaxEvents 10
-```
-
-### **Linux (Bash - Live Process Monitoring)**
-```bash
-sudo lsof -c bleachbit
-```
-or continuously monitor logs:
-```bash
-tail -f /var/log/syslog | grep bleachbit
-```
-
----
-
-## **Final Thoughts**
-BleachBit is a powerful and **scriptable** privacy tool that helps users remove unwanted files securely. The CLI options make it ideal for **automation**, **scheduled cleaning**, and **secure deletion**, but it can also be monitored to detect unauthorized use.
-
----
-
-✅ **Happy Cleaning!** 🚀
