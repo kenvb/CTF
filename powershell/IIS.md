@@ -1,4 +1,4 @@
-# Secure IIS Server
+### Secure IIS Server
 
 ```Powershell
 # Ensure the script runs as Administrator
@@ -65,22 +65,22 @@ Set-ItemProperty IIS:\AppPools\SecureAppPool -Name processModel.identityType -Va
 Write-Host "IIS Security Hardening Completed!" -ForegroundColor Green
 ```
 
-# Manual Security Enhancements (To be done separately)
+### Manual Security Enhancements (To be done separately)
 * Configure IIS App Pool identities with low-privilege users
 * Install a Web Application Firewall (e.g., Azure WAF, ModSecurity)
 * Set security headers (HSTS, X-Content-Type-Options, X-Frame-Options)
 * Move IIS logs to a secure storage location
 * Implement a reverse proxy (ARR, NGINX) for additional security
 
-# Apply IIS Crypto Best Practices (Requires IIS Crypto CLI)
+### Apply IIS Crypto Best Practices (Requires IIS Crypto CLI)
 [IIS Crypto](https://www.nartac.com/Products/IISCrypto/Download)
 ```Powershell
 Write-Host "Applying IIS Crypto best practices..." -ForegroundColor Yellow
 Start-Process -FilePath "C:\Program Files\Nartac Software\IIS Crypto\IISCryptoCLI.exe" -ArgumentList " /template best /reboot" -Wait
 ```
 
-# Setting Up ModSecurity WAF for IIS
-## Overview
+## Setting Up ModSecurity WAF for IIS
+### Overview
 ModSecurity is an open-source Web Application Firewall (WAF) that helps protect IIS from common web-based threats like SQL injection, cross-site scripting (XSS), and other malicious attacks.
 
 ## Install ModSecurity for IIS
