@@ -1,5 +1,6 @@
 # Permanent Machine PATH Modification Script
 # Retrieve the current Machine PATH environment variable permanently.
+```powershell
 $envPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")
 
 if (-not $envPath) {
@@ -51,3 +52,4 @@ if ($removePrompt -match '^(Y|y)$') {
 else {
     Write-Host "No changes made to the PATH."
 }
+```
