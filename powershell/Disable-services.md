@@ -9,9 +9,23 @@ You can use the following PowerShell script to disable the listed services safel
 # SSDP Discovery, Windows Connect Now, Offline Files, Xbox Services, Internet Connection Sharing,
 # and Smart Card Service.
 $services = @(
-    "Spooler", "Fax", "UmRdpService", "WerSvc", "bthserv", "WMPNetworkSvc",
-    "WbioSrvc", "RemoteRegistry", "seclogon", "SSDPSRV", "wcncsvc", "CSC",
-    "XblAuthManager", "XblGameSave", "XboxNetApiSvc", "SharedAccess", "SCardSvr"
+    "Spooler", 
+    "Fax", 
+    "UmRdpService", 
+    "WerSvc", 
+    "bthserv", 
+    "WMPNetworkSvc",
+    "WbioSrvc", xsd
+    "RemoteRegistry", 
+    "seclogon", 
+    "SSDPSRV", 
+    "wcncsvc", 
+    "CSC",
+    "XblAuthManager", 
+    "XblGameSave", 
+    "XboxNetApiSvc", 
+    "SharedAccess", 
+    "SCardSvr"
 )
 
 # Disable each service
