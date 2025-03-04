@@ -80,3 +80,73 @@ Write-Host "IIS Security Hardening Completed!" -ForegroundColor Green
 Write-Host "Applying IIS Crypto best practices..." -ForegroundColor Yellow
 Start-Process -FilePath "C:\Program Files\Nartac Software\IIS Crypto\IISCryptoCLI.exe" -ArgumentList " /template best /reboot" -Wait
 ```
+
+# Setting Up ModSecurity WAF for IIS
+## Overview
+ModSecurity is an open-source Web Application Firewall (WAF) that helps protect IIS from common web-based threats like SQL injection, cross-site scripting (XSS), and other malicious attacks.
+
+## Install ModSecurity for IIS
+### Download & Install
+1. Download **ModSecurity for IIS** from:
+   - [ModSecurity IIS Release](https://github.com/SpiderLabs/ModSecurity/releases)
+   - [Official Guide](https://www.trustwave.com/en-us/resources/library/documents/modsecurity-iis-installation-guide/)
+2. Extract the files and copy `modsecurity.dll` to:
+   ```text
+   C:\Program Files\ModSecurity\
+   ```
+3. Register the ModSecurity module in IIS:
+   ```powershell
+   regsvr32 C:\Program Files\ModSecurity\modsecurity.dll
+   ```
+4. Open **IIS Manager** → Select your site → Click **Modules** → Ensure `ModSecurity` is enabled.
+
+## Configure ModSecurity Rules
+### Edit the Main Configuration File
+- Navigate to `C:\Program Files\ModSecurity\`
+- Open `modsecurity.conf` and enable key settings:
+  ```ini
+  SecRuleEngine On
+  SecRequestBodyAccess On
+  SecResponseBodyAccess On
+  ```
+
+### Use OWASP Core Rule Set (CRS)
+1. Download **OWASP ModSecurity Core Rule Set (CRS):**  
+   - [GitHub OWASP CRS](https://github.com/coreruleset/coreruleset)
+2. Extract the rules into:
+   ```text
+   C:\Program Files\ModSecurity\rules\
+   ```
+3. Modify `modsecurity.conf` to include CRS rules:
+   ```ini
+   Include "C:\Program Files\ModSecurity\rules\REQUEST-901-INITIALIZATION.conf"
+   Include "C:\Program Files\ModSecurity\rules\REQUEST-911-METHOD-ENFORCEMENT.conf"
+   Include "C:\Program Files\ModSecurity\rules\REQUEST-933-APPLICATION-ATTACK-PHP.conf"
+   ```
+## Enable ModSecurity Logging
+To log blocked attacks and security events:
+```ini
+SecAuditEngine RelevantOnly
+SecAuditLog C:\inetpub\logs\modsecurity.log
+SecDebugLogLevel 3
+```
+Restart IIS for the changes to apply:
+```powershell
+iisreset
+```
+## Test ModSecurity
+To verify that ModSecurity is working, try sending a simulated attack in a browser:
+```text
+http://yoursite.com/?param=<script>alert('XSS')</script>
+```
+- Check the log file in `C:\inetpub\logs\modsecurity.log` for a blocked request.
+
+## Fine-Tune ModSecurity Rules
+If false positives occur, disable specific rules in `modsecurity.conf`:
+```ini
+SecRuleRemoveById 949110
+```
+Then restart IIS:
+```powershell
+iisreset
+```
