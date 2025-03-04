@@ -127,7 +127,7 @@ If connected to a Velociraptor server, you can automate artifact collection usin
   Restart-Service Velociraptor
   ```
 ## Useful artifacts
-
+### Windows
 * Windows.Process.List
 * Windows.Process.Tree
 * Windows.Sysmon.ProcessCreate _(or a Sysmon Logs Artifact)_
@@ -138,3 +138,37 @@ If connected to a Velociraptor server, you can automate artifact collection usin
 * Yara Scan Artifacts
 * File and Hash Artifacts (e.g., Windows.FileScan)
 * Custom Memory Analysis Artifacts
+### Linux
+* Linux.Sys.Pstree
+Displays the process tree, illustrating parent-child relationships between processes. This is essential for identifying anomalous processes or unexpected parentage, which may indicate malicious activity.​
+Daniyyell
+
+* Linux.Sys.Execve
+Monitors the execution of new processes by intercepting the execve system call. This artifact helps in tracking process creation, which is crucial for spotting unauthorized or suspicious executions.​
+
+* Linux.System.Pslist
+Provides a detailed list of all running processes, including their process IDs, parent process IDs, and command-line arguments. This information is vital for identifying unfamiliar or potentially malicious processes.​
+
+* Linux.System.Netstat
+Captures current network connections and listening ports. Monitoring network activity can reveal unauthorized connections or data exfiltration attempts.​
+
+* Linux.System.Arptable
+Retrieves the ARP table, which maps IP addresses to MAC addresses. Inspecting the ARP table can help detect ARP spoofing or other network-based attacks.​
+
+* Linux.System.Dmesg
+Collects kernel ring buffer messages. Analyzing these messages can uncover hardware issues or kernel-level anomalies that might be exploited by attackers.​
+
+* Linux.System.Syslog
+Gathers system log entries from /var/log/syslog. Reviewing these logs can provide insights into system events, including potential security incidents.​
+
+* Linux.System.AuthLogs
+Retrieves authentication logs from /var/log/auth.log. These logs are crucial for detecting unauthorized access attempts or successful intrusions.​
+
+* Linux.System.CronJobs
+Lists scheduled cron jobs for all users. Attackers often use cron jobs for persistence, so identifying unfamiliar entries is important.​
+velocidex.com
++1
+SEC Consult
++1
+* Linux.System.SSHConfig
+Collects SSH configuration files. Reviewing these configurations can reveal unauthorized changes that might weaken SSH security.​
