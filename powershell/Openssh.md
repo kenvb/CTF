@@ -1,45 +1,47 @@
-# Stop OpenSSH services if running
+### Stop OpenSSH services if running
+```powershell
 Get-Service -Name sshd, ssh-agent -ErrorAction SilentlyContinue | Stop-Service -Force -ErrorAction SilentlyContinue
-
-# Uninstall existing OpenSSH server
+```
+### Uninstall existing OpenSSH server
+```powershell
 Write-Host "Uninstalling OpenSSH Server..."
 Remove-WindowsFeature -Name OpenSSH-Server -ErrorAction SilentlyContinue
-
-# Remove any existing SSH directory
+```
+### Remove any existing SSH directory
+```powershell
 $sshDir = "$env:ProgramData\ssh"
 if (Test-Path $sshDir) {
     Write-Host "Removing old OpenSSH configuration..."
     Remove-Item -Path $sshDir -Recurse -Force
 }
-
-# Download the latest OpenSSH
+```
+### Download the latest OpenSSH
+```powershell
 $downloadUrl = "https://github.com/PowerShell/Win32-OpenSSH/releases/latest/download/OpenSSH-Win64.zip"
 $downloadPath = "$env:TEMP\OpenSSH-Win64.zip"
 $installPath = "C:\Program Files\OpenSSH"
 
 Write-Host "Downloading latest OpenSSH version..."
 Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadPath
-
-# Extract OpenSSH
+```
+### Extract OpenSSH
+```powershell
 Write-Host "Extracting OpenSSH..."
 Expand-Archive -Path $downloadPath -DestinationPath $installPath -Force
-
-# Install OpenSSH service
+```
+### Install OpenSSH service
+```powershell
 Set-Location $installPath
 Write-Host "Installing OpenSSH Service..."
 Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File .\install-sshd.ps1" -Wait -NoNewWindow
-
-# Configure and start OpenSSH
+```
+### Configure and start OpenSSH
+```powershell
 Write-Host "Setting OpenSSH to start automatically..."
 Set-Service -Name sshd -StartupType Automatic
 Start-Service -Name sshd
-
 Write-Host "OpenSSH installation complete!"
-
-
-
-
-
+```
 # Windows OpenSSH Certificate Authentication Guide
 ## 1. Check if OpenSSH is installed
 
