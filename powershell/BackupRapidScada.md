@@ -1,5 +1,5 @@
 # PowerShell Script to Backup Rapid SCADA Configuration Files to a Zip and Schedule It to Run Every Hour
-
+```powershell
 $configPaths = @(
     "C:\Program Files\SCADA\BaseDAT",
     "C:\Program Files\SCADA\Views",
@@ -36,3 +36,4 @@ $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfil
 $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).Date -RepetitionInterval (New-TimeSpan -Hours 1) -RepetitionDuration (New-TimeSpan -Days 365)
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
 Register-ScheduledTask -TaskName "HourlySCADABackup" -Action $action -Trigger $trigger -Settings $settings -Description "Backup Rapid SCADA configuration files every hour"
+```

@@ -1,5 +1,4 @@
 # Permanent Machine PATH Modification Script
-
 # Retrieve the current Machine PATH environment variable permanently.
 $envPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")
 
