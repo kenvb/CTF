@@ -1,0 +1,8 @@
+Persistence Mechanism
+The malware creates the following two registry run keys to ensure persistence:
+
+Key: HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\<Random>
+Value: <Full_path>\tasksche.exe
+
+Key: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\<Random>
+Value: <Full_path>\tasksche.exe

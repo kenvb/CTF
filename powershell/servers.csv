@@ -1,0 +1,4 @@
+name,ipaddress
+server,10.0.2.7
+client1,10.0.2.8
+client2,10.0.2.6
