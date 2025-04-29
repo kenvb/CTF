@@ -1,0 +1,494 @@
+﻿[
+    {
+        "Name":  "AppXSvc",
+        "DisplayName":  "AppX Deployment Service (AppXSVC)",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "BITS",
+        "DisplayName":  "Background Intelligent Transfer Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "BrokerInfrastructure",
+        "DisplayName":  "Background Tasks Infrastructure Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "BFE",
+        "DisplayName":  "Base Filtering Engine",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "cbdhsvc_57d28",
+        "DisplayName":  "Clipboard User Service_57d28",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "KeyIso",
+        "DisplayName":  "CNG Key Isolation",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "EventSystem",
+        "DisplayName":  "COM+ Event System",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "CDPSvc",
+        "DisplayName":  "Connected Devices Platform Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "CDPUserSvc_57d28",
+        "DisplayName":  "Connected Devices Platform User Service_57d28",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "DiagTrack",
+        "DisplayName":  "Connected User Experiences and Telemetry",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "CoreMessagingRegistrar",
+        "DisplayName":  "CoreMessaging",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "VaultSvc",
+        "DisplayName":  "Credential Manager",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "CryptSvc",
+        "DisplayName":  "Cryptographic Services",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "DsSvc",
+        "DisplayName":  "Data Sharing Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "DusmSvc",
+        "DisplayName":  "Data Usage",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "DcomLaunch",
+        "DisplayName":  "DCOM Server Process Launcher",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "DsmSvc",
+        "DisplayName":  "Device Setup Manager",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "Dhcp",
+        "DisplayName":  "DHCP Client",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "DPS",
+        "DisplayName":  "Diagnostic Policy Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "WdiServiceHost",
+        "DisplayName":  "Diagnostic Service Host",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "WdiSystemHost",
+        "DisplayName":  "Diagnostic System Host",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "DispBrokerDesktopSvc",
+        "DisplayName":  "Display Policy Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "TrkWks",
+        "DisplayName":  "Distributed Link Tracking Client",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "Dnscache",
+        "DisplayName":  "DNS Client",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "iphlpsvc",
+        "DisplayName":  "IP Helper",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "LSM",
+        "DisplayName":  "Local Session Manager",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "wlidsvc",
+        "DisplayName":  "Microsoft Account Sign-in Assistant",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "WdNisSvc",
+        "DisplayName":  "Microsoft Defender Antivirus Network Inspection Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "WinDefend",
+        "DisplayName":  "Microsoft Defender Antivirus Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "MDCoreSvc",
+        "DisplayName":  "Microsoft Defender Core Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "InstallService",
+        "DisplayName":  "Microsoft Store Install Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "Netlogon",
+        "DisplayName":  "Netlogon",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "NcbService",
+        "DisplayName":  "Network Connection Broker",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "netprofm",
+        "DisplayName":  "Network List Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "NlaSvc",
+        "DisplayName":  "Network Location Awareness",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "nsi",
+        "DisplayName":  "Network Store Interface Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "SEMgrSvc",
+        "DisplayName":  "Payments and NFC/SE Manager",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "PlugPlay",
+        "DisplayName":  "Plug and Play",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "Power",
+        "DisplayName":  "Power",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "PcaSvc",
+        "DisplayName":  "Program Compatibility Assistant Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "RmSvc",
+        "DisplayName":  "Radio Management Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "RasMan",
+        "DisplayName":  "Remote Access Connection Manager",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "RpcSs",
+        "DisplayName":  "Remote Procedure Call (RPC)",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "RpcEptMapper",
+        "DisplayName":  "RPC Endpoint Mapper",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "SstpSvc",
+        "DisplayName":  "Secure Socket Tunneling Protocol Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "SamSs",
+        "DisplayName":  "Security Accounts Manager",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "wscsvc",
+        "DisplayName":  "Security Center",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "LanmanServer",
+        "DisplayName":  "Server",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "ShellHWDetection",
+        "DisplayName":  "Shell Hardware Detection",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "StateRepository",
+        "DisplayName":  "State Repository Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "StorSvc",
+        "DisplayName":  "Storage Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "OneSyncSvc_57d28",
+        "DisplayName":  "Sync Host_57d28",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "SysMain",
+        "DisplayName":  "SysMain",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "SENS",
+        "DisplayName":  "System Event Notification Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "SystemEventsBroker",
+        "DisplayName":  "System Events Broker",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "Schedule",
+        "DisplayName":  "Task Scheduler",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "lmhosts",
+        "DisplayName":  "TCP/IP NetBIOS Helper",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "Themes",
+        "DisplayName":  "Themes",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "TimeBrokerSvc",
+        "DisplayName":  "Time Broker",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "TabletInputService",
+        "DisplayName":  "Touch Keyboard and Handwriting Panel Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "UsoSvc",
+        "DisplayName":  "Update Orchestrator Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "UserManager",
+        "DisplayName":  "User Manager",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "ProfSvc",
+        "DisplayName":  "User Profile Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "VBoxService",
+        "DisplayName":  "VirtualBox Guest Additions Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "TokenBroker",
+        "DisplayName":  "Web Account Manager",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "Audiosrv",
+        "DisplayName":  "Windows Audio",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "AudioEndpointBuilder",
+        "DisplayName":  "Windows Audio Endpoint Builder",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "Wcmsvc",
+        "DisplayName":  "Windows Connection Manager",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "mpssvc",
+        "DisplayName":  "Windows Defender Firewall",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "EventLog",
+        "DisplayName":  "Windows Event Log",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "FontCache",
+        "DisplayName":  "Windows Font Cache Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "LicenseManager",
+        "DisplayName":  "Windows License Manager Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "Winmgmt",
+        "DisplayName":  "Windows Management Instrumentation",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "WpnService",
+        "DisplayName":  "Windows Push Notifications System Service",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "WpnUserService_57d28",
+        "DisplayName":  "Windows Push Notifications User Service_57d28",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "WinRM",
+        "DisplayName":  "Windows Remote Management (WS-Management)",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "WSearch",
+        "DisplayName":  "Windows Search",
+        "Status":  4,
+        "StartType":  2
+    },
+    {
+        "Name":  "SecurityHealthService",
+        "DisplayName":  "Windows Security Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "W32Time",
+        "DisplayName":  "Windows Time",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "wuauserv",
+        "DisplayName":  "Windows Update",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "WinHttpAutoProxySvc",
+        "DisplayName":  "WinHTTP Web Proxy Auto-Discovery Service",
+        "Status":  4,
+        "StartType":  3
+    },
+    {
+        "Name":  "LanmanWorkstation",
+        "DisplayName":  "Workstation",
+        "Status":  4,
+        "StartType":  2
+    }
+]

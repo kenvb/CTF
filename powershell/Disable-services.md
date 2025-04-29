@@ -15,7 +15,8 @@ $services = @(
     "WerSvc", 
     "bthserv", 
     "WMPNetworkSvc",
-    "WbioSrvc", xsd
+    "WbioSrvc", 
+    "xsd",
     "RemoteRegistry", 
     "seclogon", 
     "SSDPSRV", 

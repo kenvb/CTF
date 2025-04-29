@@ -1,0 +1,327 @@
+﻿{
+    "Adapters":  {
+                     "InterfaceAlias":  "Ethernet",
+                     "IPv4Address":  "10.0.2.7",
+                     "IPv6Address":  null,
+                     "DNSServers":  "127.0.0.1",
+                     "Gateway":  "10.0.2.1",
+                     "MACAddress":  "08-00-27-C7-93-CC"
+                 },
+    "Routes":  [
+                   {
+                       "DestinationPrefix":  "255.255.255.255/32",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Ethernet",
+                       "RouteMetric":  256,
+                       "ifIndex":  11
+                   },
+                   {
+                       "DestinationPrefix":  "255.255.255.255/32",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                       "RouteMetric":  256,
+                       "ifIndex":  1
+                   },
+                   {
+                       "DestinationPrefix":  "224.0.0.0/4",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Ethernet",
+                       "RouteMetric":  256,
+                       "ifIndex":  11
+                   },
+                   {
+                       "DestinationPrefix":  "224.0.0.0/4",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                       "RouteMetric":  256,
+                       "ifIndex":  1
+                   },
+                   {
+                       "DestinationPrefix":  "127.255.255.255/32",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                       "RouteMetric":  256,
+                       "ifIndex":  1
+                   },
+                   {
+                       "DestinationPrefix":  "127.0.0.1/32",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                       "RouteMetric":  256,
+                       "ifIndex":  1
+                   },
+                   {
+                       "DestinationPrefix":  "127.0.0.0/8",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                       "RouteMetric":  256,
+                       "ifIndex":  1
+                   },
+                   {
+                       "DestinationPrefix":  "10.0.2.255/32",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Ethernet",
+                       "RouteMetric":  256,
+                       "ifIndex":  11
+                   },
+                   {
+                       "DestinationPrefix":  "10.0.2.7/32",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Ethernet",
+                       "RouteMetric":  256,
+                       "ifIndex":  11
+                   },
+                   {
+                       "DestinationPrefix":  "10.0.2.0/24",
+                       "NextHop":  "0.0.0.0",
+                       "InterfaceAlias":  "Ethernet",
+                       "RouteMetric":  256,
+                       "ifIndex":  11
+                   },
+                   {
+                       "DestinationPrefix":  "0.0.0.0/0",
+                       "NextHop":  "10.0.2.1",
+                       "InterfaceAlias":  "Ethernet",
+                       "RouteMetric":  256,
+                       "ifIndex":  11
+                   },
+                   {
+                       "DestinationPrefix":  "ff00::/8",
+                       "NextHop":  "::",
+                       "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                       "RouteMetric":  256,
+                       "ifIndex":  1
+                   },
+                   {
+                       "DestinationPrefix":  "::1/128",
+                       "NextHop":  "::",
+                       "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                       "RouteMetric":  256,
+                       "ifIndex":  1
+                   }
+               ],
+    "ListeningPorts":  [
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  55656,
+                               "Process":  "dfsrs",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  55634,
+                               "Process":  "dns",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  55623,
+                               "Process":  "services",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  55617,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49668,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49667,
+                               "Process":  "svchost",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49666,
+                               "Process":  "svchost",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49665,
+                               "Process":  "wininit",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49664,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  47001,
+                               "Process":  "System",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  9389,
+                               "Process":  "Microsoft.ActiveDirectory.WebServices",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  5986,
+                               "Process":  "System",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  5985,
+                               "Process":  "System",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  5357,
+                               "Process":  "System",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  593,
+                               "Process":  "svchost",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  464,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  445,
+                               "Process":  "System",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  135,
+                               "Process":  "svchost",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  88,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  55656,
+                               "Process":  "dfsrs",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  55634,
+                               "Process":  "dns",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  55623,
+                               "Process":  "services",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  55617,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49668,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49667,
+                               "Process":  "svchost",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49666,
+                               "Process":  "svchost",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49665,
+                               "Process":  "wininit",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49664,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  9389,
+                               "Process":  "Microsoft.ActiveDirectory.WebServices",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  3269,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  3268,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  636,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  593,
+                               "Process":  "svchost",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  389,
+                               "Process":  "lsass",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "10.0.2.7",
+                               "LocalPort":  139,
+                               "Process":  "System",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  135,
+                               "Process":  "svchost",
+                               "Protocol":  "TCP"
+                           },
+                           {
+                               "LocalAddress":  "10.0.2.7",
+                               "LocalPort":  53,
+                               "Process":  "dns",
+                               "Protocol":  "TCP"
+                           }
+                       ]
+}

@@ -1,0 +1,3 @@
+﻿Execution Summary (20250421-164615):
+
+DC                   get-networkinfo      Success    .\Output\DC\get-networkinfo\get-networkinfo-20250421-164615.json

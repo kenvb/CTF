@@ -1,0 +1,4 @@
+﻿Execution Summary (20250422-174855):
+
+DC                   start-autoruns       No Output                                                     5.18s
+WINDOWSCLIENT        start-autoruns       No Output                                                     5.18s

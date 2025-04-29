@@ -1,0 +1,302 @@
+﻿[
+    {
+        "Name":  "svchost",
+        "Id":  1536,
+        "CPU":  1139.9375,
+        "StartTime":  "\/Date(1745245423011)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  1920,
+        "CPU":  239.8125,
+        "StartTime":  "\/Date(1745246638705)\/"
+    },
+    {
+        "Name":  "MsMpEng",
+        "Id":  3064,
+        "CPU":  61.90625,
+        "StartTime":  "\/Date(1745246639112)\/"
+    },
+    {
+        "Name":  "System",
+        "Id":  4,
+        "CPU":  24.453125,
+        "StartTime":  "\/Date(1745245419483)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  2612,
+        "CPU":  12.734375,
+        "StartTime":  "\/Date(1745246638950)\/"
+    },
+    {
+        "Name":  "explorer",
+        "Id":  2204,
+        "CPU":  6.453125,
+        "StartTime":  "\/Date(1745246679086)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  956,
+        "CPU":  5.21875,
+        "StartTime":  "\/Date(1745245422776)\/"
+    },
+    {
+        "Name":  "csrss",
+        "Id":  556,
+        "CPU":  4.140625,
+        "StartTime":  "\/Date(1745245422474)\/"
+    },
+    {
+        "Name":  "Memory Compression",
+        "Id":  1396,
+        "CPU":  4.109375,
+        "StartTime":  "\/Date(1745246638741)\/"
+    },
+    {
+        "Name":  "dwm",
+        "Id":  1136,
+        "CPU":  3.15625,
+        "StartTime":  "\/Date(1745245422936)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  6312,
+        "CPU":  3.03125,
+        "StartTime":  "\/Date(1745252336212)\/"
+    },
+    {
+        "Name":  "SearchApp",
+        "Id":  5976,
+        "CPU":  2.703125,
+        "StartTime":  "\/Date(1745246682087)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  1852,
+        "CPU":  2.65625,
+        "StartTime":  "\/Date(1745263077543)\/"
+    },
+    {
+        "Name":  "OneDrive",
+        "Id":  4380,
+        "CPU":  2.625,
+        "StartTime":  "\/Date(1745246693316)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  4312,
+        "CPU":  2.46875,
+        "StartTime":  "\/Date(1745258657838)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  1424,
+        "CPU":  2.4375,
+        "StartTime":  "\/Date(1745246772638)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  3776,
+        "CPU":  2.265625,
+        "StartTime":  "\/Date(1745260371473)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  832,
+        "CPU":  2.0625,
+        "StartTime":  "\/Date(1745245422698)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  3912,
+        "CPU":  2.015625,
+        "StartTime":  "\/Date(1745259059420)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  5000,
+        "CPU":  1.984375,
+        "StartTime":  "\/Date(1745252887791)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  3464,
+        "CPU":  1.984375,
+        "StartTime":  "\/Date(1745250529058)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  3244,
+        "CPU":  1.921875,
+        "StartTime":  "\/Date(1745246639224)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  4556,
+        "CPU":  1.828125,
+        "StartTime":  "\/Date(1745259904712)\/"
+    },
+    {
+        "Name":  "lsass",
+        "Id":  712,
+        "CPU":  1.8125,
+        "StartTime":  "\/Date(1745245422557)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  1368,
+        "CPU":  1.75,
+        "StartTime":  "\/Date(1745245422979)\/"
+    },
+    {
+        "Name":  "SearchIndexer",
+        "Id":  800,
+        "CPU":  1.671875,
+        "StartTime":  "\/Date(1745246640622)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  2924,
+        "CPU":  1.453125,
+        "StartTime":  "\/Date(1745246639065)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  3960,
+        "CPU":  1.359375,
+        "StartTime":  "\/Date(1745257992998)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  1272,
+        "CPU":  1.328125,
+        "StartTime":  "\/Date(1745245422962)\/"
+    },
+    {
+        "Name":  "services",
+        "Id":  692,
+        "CPU":  1.265625,
+        "StartTime":  "\/Date(1745245422535)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  736,
+        "CPU":  1.265625,
+        "StartTime":  "\/Date(1745260799650)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  7196,
+        "CPU":  1.15625,
+        "StartTime":  "\/Date(1745265248921)\/"
+    },
+    {
+        "Name":  "SecurityHealthService",
+        "Id":  7108,
+        "CPU":  1.140625,
+        "StartTime":  "\/Date(1745246692326)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  2916,
+        "CPU":  1.125,
+        "StartTime":  "\/Date(1745246639063)\/"
+    },
+    {
+        "Name":  "RuntimeBroker",
+        "Id":  5844,
+        "CPU":  1.015625,
+        "StartTime":  "\/Date(1745246681906)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  2388,
+        "CPU":  1,
+        "StartTime":  "\/Date(1745246638868)\/"
+    },
+    {
+        "Name":  "LogonUI",
+        "Id":  4636,
+        "CPU":  0.953125,
+        "StartTime":  "\/Date(1745247367094)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  1348,
+        "CPU":  0.921875,
+        "StartTime":  "\/Date(1745245422977)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  2852,
+        "CPU":  0.90625,
+        "StartTime":  "\/Date(1745246790985)\/"
+    },
+    {
+        "Name":  "Registry",
+        "Id":  108,
+        "CPU":  0.78125,
+        "StartTime":  "\/Date(1745245416904)\/"
+    },
+    {
+        "Name":  "sihost",
+        "Id":  2508,
+        "CPU":  0.71875,
+        "StartTime":  "\/Date(1745246678867)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  5464,
+        "CPU":  0.671875,
+        "StartTime":  "\/Date(1745246681009)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  4224,
+        "CPU":  0.640625,
+        "StartTime":  "\/Date(1745246678887)\/"
+    },
+    {
+        "Name":  "VBoxTray",
+        "Id":  1080,
+        "CPU":  0.609375,
+        "StartTime":  "\/Date(1745246692713)\/"
+    },
+    {
+        "Name":  "StartMenuExperienceHost",
+        "Id":  5680,
+        "CPU":  0.609375,
+        "StartTime":  "\/Date(1745246681625)\/"
+    },
+    {
+        "Name":  "RuntimeBroker",
+        "Id":  6084,
+        "CPU":  0.59375,
+        "StartTime":  "\/Date(1745246682306)\/"
+    },
+    {
+        "Name":  "csrss",
+        "Id":  468,
+        "CPU":  0.59375,
+        "StartTime":  "\/Date(1745245422353)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  2184,
+        "CPU":  0.515625,
+        "StartTime":  "\/Date(1745246638798)\/"
+    },
+    {
+        "Name":  "svchost",
+        "Id":  2064,
+        "CPU":  0.484375,
+        "StartTime":  "\/Date(1745246638749)\/"
+    },
+    {
+        "Name":  "wsmprovhost",
+        "Id":  7228,
+        "CPU":  0.46875,
+        "StartTime":  "\/Date(1745335212928)\/"
+    }
+]

@@ -1,0 +1,16 @@
+﻿[
+    {
+        "Server":  "WINDOWSCLIENT",
+        "Script":  "start-autoruns",
+        "Status":  "Error",
+        "OutputFile":  "",
+        "Duration":  "0.04s"
+    },
+    {
+        "Server":  "DC",
+        "Script":  "start-autoruns",
+        "Status":  "Error",
+        "OutputFile":  "",
+        "Duration":  "0.01s"
+    }
+]

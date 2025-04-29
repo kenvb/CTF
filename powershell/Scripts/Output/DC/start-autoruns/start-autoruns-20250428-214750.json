@@ -1,0 +1,31 @@
+﻿
+Sysinternals Autoruns v14.11 - Autostart program viewer
+Copyright (C) 2002-2024 Mark Russinovich
+Sysinternals - www.sysinternals.com
+
+Time,Entry Location,Entry,Enabled,Category,Profile,Description,Signer,Company,Image Path,Version,Launch String,VT detection,VT permalink,MD5,SHA-1,PESHA-1,PESHA-256,SHA-256,IMP
+20250428-193733,HKLM\System\CurrentControlSet\Services,,,"Services",System-wide,,,,,,,,,,,
+20230417-164419,"HKLM\System\CurrentControlSet\Services","VBoxService",enabled,"Services",System-wide,"VirtualBox Guest Additions Service: Manages VM runtime information, time synchronization, remote sysprep execution and miscellaneous utilities for guest operating systems.","(Verified) Oracle Corporation","Oracle and/or its affiliates","c:\windows\system32\vboxservice.exe",7.0.8.6879,"%SystemRoot%\System32\VBoxService.exe",Unknown,n/a,4D53A7B9560200D2A5FA8F31796C591E,6CA0D0B2A82E2A7CDD068DCA27856B10F2F17BB6,5AF0C8158C90B1A4F78C718C82467B71CFC5C319,2F2E4F8143B7ED35E96A130463D2CDC85A5B9FD6A6BCFB437E03CAA0A5B7194E,3BA5E5BC419683A0B5DA07CDBCBD76E647EE53C13778878CBFD79D7A4FC907C8,68D13ACADC6FA23938208623F7F8474B
+20250428-193733,HKLM\System\CurrentControlSet\Services,,,"Drivers",System-wide,,,,,,,,,,,
+20150202-090009,"HKLM\System\CurrentControlSet\Services","iaLPSSi_GPIO",enabled,"Drivers",System-wide,"Intel(R) Serial IO GPIO Controller Driver: Intel(R) Serial IO GPIO Controller Driver","(Verified) Intel Corporation - Client Components Group","Intel Corporation","c:\windows\system32\drivers\ialpssi_gpio.sys",1.1.250.0,"\SystemRoot\System32\drivers\iaLPSSi_GPIO.sys",Unknown,n/a,16A10CCEDCF5AC4CAAE43DC9FC40392F,F9C70BDC52A485F1577372D828DCC75824A52711,3C2ECE86170689EC14DA144E745836E8CC745C15,252132BE574241E999137D339F09C5016BB0CDC809083E231EBDB58E43CC2EC3,F77696AE55B992154A3B35F7660BD73E0AB35A6ECEEC1931C0D35748CFA605C0,7DFE9809E3857082B486C96369843C36
+,"HKLM\System\CurrentControlSet\Services","vwifibus",enabled,"Drivers",System-wide,"vwifibus: ",,"","File not found: C:\Windows\System32\drivers\vwifibus.sys",,"\SystemRoot\System32\drivers\vwifibus.sys",,,,,,
+20250203-153438,HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Font Drivers,,,"Drivers",System-wide,,,,,,,,,,,
+,"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Font Drivers","Adobe Type Manager",enabled,"Drivers",System-wide,"",,"","File not found: atmfd.dll",,"atmfd.dll",,,,,,
+20210508-082041,HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls,,,"Known DLLs",System-wide,,,,,,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","_wowarmhw",enabled,"Known DLLs",System-wide,"",,"","c:\windows\system32\wowarmhw.dll",,"wowarmhw.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","_xtajit",enabled,"Known DLLs",System-wide,"",,"","c:\windows\system32\xtajit.dll",,"xtajit.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","_xtajit64",enabled,"Known DLLs",System-wide,"",,"","c:\windows\system32\xtajit64.dll",,"xtajit64.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","_wow64cpu",enabled,"Known DLLs",System-wide,"",,"","c:\windows\syswow64\wow64cpu.dll",,"wow64cpu.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","_wowarmhw",enabled,"Known DLLs",System-wide,"",,"","c:\windows\syswow64\wowarmhw.dll",,"wowarmhw.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","_xtajit",enabled,"Known DLLs",System-wide,"",,"","c:\windows\syswow64\xtajit.dll",,"xtajit.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","_xtajit64",enabled,"Known DLLs",System-wide,"",,"","c:\windows\syswow64\xtajit64.dll",,"xtajit64.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","wow64",enabled,"Known DLLs",System-wide,"",,"","c:\windows\syswow64\wow64.dll",,"wow64.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","wow64base",enabled,"Known DLLs",System-wide,"",,"","c:\windows\syswow64\wow64base.dll",,"wow64base.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","wow64con",enabled,"Known DLLs",System-wide,"",,"","c:\windows\syswow64\wow64con.dll",,"wow64con.dll",Unknown,n/a,,,,,,
+,"HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls","wow64win",enabled,"Known DLLs",System-wide,"",,"","c:\windows\syswow64\wow64win.dll",,"wow64win.dll",Unknown,n/a,,,,,,
+20250203-153439,HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\AlternateShell,,,"Logon",System-wide,,,,,,,,,,,
+19770122-083400,"HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\AlternateShell","cmd.exe",enabled,"Logon",System-wide,"Windows Command Processor","(Verified) Microsoft Windows","Microsoft Corporation","c:\windows\system32\cmd.exe",10.0.20348.1,"cmd.exe",Unknown,n/a,E7A6B1F51EFB405287A8048CFA4690F4,2ED89B5430C775306B316BA3A926D7DE4FE39FC7,42F5605398C81CA965B8BA01E2ADDA0D68EA707E,DF448CC4BCF0E3213CF29D7ECC05FA78A6CF093B98357D04EA7AFB0800869EFE,EB71EA69DD19F728AB9240565E8C7EFB59821E19E3788E289301E1E74940C208,D60B77062898DC6BFAE7FE11A0F8806C
+20210508-082419,HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\AlternateShells\AvailableShells,,,"Logon",System-wide,,,,,,,,,,,
+,"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\AlternateShells\AvailableShells","30000",enabled,"Logon",System-wide,"",,"","File not found: cd /d ",,"cmd.exe /c ""cd /d ""%USERPROFILE%"" & start cmd.exe /k runonce.exe /AlternateShellStartup""",,,,,,
+,Task Scheduler,,,"Tasks",System-wide,,,,,,,,,,,
+,"Task Scheduler","\Microsoft\Windows\UpdateOrchestrator\UUS Failover Task",enabled,"Tasks",System-wide,"",,"","File not found: C:\Windows\system32\failover.exe",,"""%systemroot%\system32\failover.exe"" ",,,,,,

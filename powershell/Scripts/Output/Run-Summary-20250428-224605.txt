@@ -1,0 +1,4 @@
+﻿Execution Summary (20250428-224605):
+
+DC                   Get-InstalledSoftware Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\Get-InstalledSoftware\Get-InstalledSoftware-20250428-225009.json 0.19s
+WINDOWSCLIENT        Get-InstalledSoftware Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\Get-InstalledSoftware\Get-InstalledSoftware-20250428-225009.json 0.19s

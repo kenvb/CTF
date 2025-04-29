@@ -1,0 +1,10 @@
+﻿Execution Summary (20250421-211833):
+
+DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250421-211833.json 20.64s
+DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250421-211833.json 20.73s
+WINDOWSCLIENT        get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\get-networkinfo\get-networkinfo-20250421-211833.json 140.73s
+DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250421-211833.json 16.12s
+DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250421-211833.json 15.31s
+DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250421-211833.json 10.94s
+DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250421-211833.json 3.87s
+DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250421-211833.json 3.54s

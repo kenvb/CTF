@@ -1,0 +1,6 @@
+﻿Execution Summary (20250421-181927):
+
+DC                   custom-inline        Success    .\Output\DC\custom-inline\custom-inline-20250421-181927.json 7.53s
+WINDOWSCLIENT        custom-inline        Success    .\Output\WINDOWSCLIENT\custom-inline\custom-inline-20250421-181927.json 4.99s
+DC                   get-networkinfo      Success    .\Output\DC\get-networkinfo\get-networkinfo-20250421-181927.json 154.50s
+WINDOWSCLIENT        get-networkinfo      Success    .\Output\WINDOWSCLIENT\get-networkinfo\get-networkinfo-20250421-181927.json 154.50s

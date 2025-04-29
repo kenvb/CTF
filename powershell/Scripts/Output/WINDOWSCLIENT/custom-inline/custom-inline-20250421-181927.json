@@ -1,0 +1,32 @@
+﻿
+
+PSComputerName           : 10.0.2.8
+RunspaceId               : 272acea6-486f-401d-a115-5384cd44ffb5
+ComputerName             : 127.0.0.1
+RemoteAddress            : 127.0.0.1
+ResolvedAddresses        : {127.0.0.1}
+PingSucceeded            : True
+PingReplyDetails         : System.Net.NetworkInformation.PingReply
+TcpClientSocket          : 
+TcpTestSucceeded         : False
+RemotePort               : 0
+TraceRoute               : 
+Detailed                 : False
+InterfaceAlias           : Loopback Pseudo-Interface 1
+InterfaceIndex           : 1
+InterfaceDescription     : 
+NetAdapter               : 
+NetRoute                 : MSFT_NetRoute (InstanceID = ";?A8:8:8;9??55;55:8:8:8:55;")
+SourceAddress            : MSFT_NetIPAddress (Name = ";?A8:8:8;55;55;55;", CreationClassName = "", SystemCreationClassName = "", SystemName = "")
+NameResolutionSucceeded  : True
+BasicNameResolution      : {Microsoft.DnsClient.Commands.DnsRecord_PTR}
+LLMNRNetbiosRecords      : {}
+DNSOnlyRecords           : {Microsoft.DnsClient.Commands.DnsRecord_PTR}
+AllNameResolutionResults : Microsoft.DnsClient.Commands.DnsRecord_PTR
+IsAdmin                  : True
+NetworkIsolationContext  : Loopback
+MatchingIPsecRules       : 
+
+
+
+

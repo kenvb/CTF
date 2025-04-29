@@ -1,0 +1,4 @@
+﻿Execution Summary (20250421-202544):
+
+DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250421-202544.json 23.83s
+WINDOWSCLIENT        get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\get-networkinfo\get-networkinfo-20250421-202544.json 134.37s

@@ -1,0 +1,4 @@
+﻿Execution Summary (20250428-234101):
+
+DC                   get-processList      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-processList\get-processList-20250428-234143.json 0.07s
+WINDOWSCLIENT        get-processList      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\get-processList\get-processList-20250428-234143.json 0.08s
