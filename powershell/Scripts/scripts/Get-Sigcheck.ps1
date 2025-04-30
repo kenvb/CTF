@@ -1,30 +1,36 @@
-# Get-Sigcheck.ps1
+[CmdletBinding()]
 param (
-    [string]$TargetPath = "C:\Windows\System32"
+    [string]$ToolName = "sigcheck.exe",
+    [string]$TargetPath = "C:\Windows"
 )
 
-$ToolPath = "C:\Tools\sigcheck.exe"
-
-if (-Not (Test-Path $ToolPath)) {
-    Write-Warning "$ToolPath not found on remote system."
-    return ""
-}
+$Script:OutputFormat = 'csv'
 
 try {
-    # Flags:
-    # -nobanner : suppress Sysinternals banner
-    # -s        : recurse into subdirectories
-    # -e        : scan executable images only
-    # -c        : output in CSV format
-    # -h        : calculate and show file hashes
-    $output = & $ToolPath -nobanner -s -e -c -h $TargetPath
-    $encoded = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($output))
-
-    return @{
-        OutputFormat = 'csv'
-        Data         = $encoded
+    $toolPath = "C:\Tools\$ToolName"
+    if (-not (Test-Path $toolPath)) {
+        Write-Warning "$ToolName not found at $toolPath"
+        return
     }
-} catch {
-    Write-Warning "Sigcheck execution failed: $_"
-    return ""
+
+    $cmd = "$toolPath -accepteula -nobanner -h -c `"$TargetPath`""
+    $output = Invoke-Expression $cmd
+
+    if (-not $output) {
+        Write-Warning "No output from sigcheck."
+        return
+    }
+
+    $outputString = $output -join "`n"
+
+    if ($ShowConsole) {
+        Show-ConsolePreview -Label "$ToolName output" -Content $outputString
+    }
+
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($outputString)
+    $encoded = [System.Convert]::ToBase64String($bytes)
+    return $encoded
+}
+catch {
+    Write-Warning "Error running $ToolName\: $_"
 }
