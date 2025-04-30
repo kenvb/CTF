@@ -138,7 +138,8 @@ def script_view(server, script):
                            extension=ext,
                            parsed_output=parsed_output,
                            raw_output=latest_content,
-                           diff=diff_output)
+                           diff=diff_output,
+                           previous_file=previous_file)
 
 
 if __name__ == "__main__":

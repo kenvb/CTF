@@ -44,11 +44,14 @@
 {% endif %}
 </div>
 
-{% if diff.strip() %}
+{# Diff Handling Section #}
+{% if diff is defined and diff and diff.strip() %}
 <h2>Diff with Previous</h2>
 <div class="diff">
 <pre>{{ diff }}</pre>
 </div>
+{% elif previous_file %}
+<p><em>No changes detected between the two most recent results.</em></p>
 {% else %}
 <p><em>No previous result to compare.</em></p>
 {% endif %}
