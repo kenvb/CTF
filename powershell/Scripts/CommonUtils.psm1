@@ -35,43 +35,112 @@ function Get-SafeTimestamp {
 }
 
 function Save-ResultToFile {
-    param(
-        [Parameter(Mandatory = $true)]
-        [object]$Result,
-        [Parameter(Mandatory = $true)]
-        [string]$ServerName,
-        [Parameter(Mandatory = $true)]
-        [string]$ScriptName,
-        [Parameter(Mandatory = $true)]
-        [string]$Timestamp,
-        [Parameter()]
-        [switch]$ShowConsole
+    param (
+        [Parameter(Mandatory = $true)] $Result,
+        [Parameter(Mandatory = $true)] [string]$ServerName,
+        [Parameter(Mandatory = $true)] [string]$ScriptName,
+        [Parameter(Mandatory = $true)] [string]$Timestamp
     )
 
-    $folderPath = ".\Output\$ServerName\$ScriptName"
-    if (-not (Test-Path -Path $folderPath)) {
-        New-Item -ItemType Directory -Path $folderPath | Out-Null
+    $OutputFormat = "json"
+    if ($Result -is [hashtable] -and $Result.ContainsKey("OutputFormat")) {
+        $OutputFormat = $Result.OutputFormat.ToLower()
+        $Result = $Result.Data
     }
 
-    $filePath = Join-Path $folderPath "$($ScriptName)-$($Timestamp)"
-
-    if ($Result -is [string] -and $Result.Trim().StartsWith('{')) {
-        # JSON string detected
-        $filePath += ".json"
-    }
-    elseif ($Result -is [string] -and $Result.Contains(",")) {
-        # CSV detected
-        $filePath += ".csv"
-    }
-    else {
-        # Default fallback
-        $filePath += ".txt"
+    if ($Result -is [string] -and $Result -match '^[A-Za-z0-9+/=]{20,}$') {
+        try {
+            $Result = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Result))
+        } catch {
+            Write-Warning "Failed to decode Base64 result. Saving raw."
+        }
     }
 
-    $Result | Out-File -FilePath $filePath -Encoding UTF8
-
-    if ($ShowConsole) {
-        Write-Host "Saved output to $filePath\:" -ForegroundColor Yellow
-        Get-Content $filePath
+    $baseDir = Join-Path -Path ".\Output" -ChildPath $ServerName
+    $scriptDir = Join-Path -Path $baseDir -ChildPath $ScriptName
+    if (-not (Test-Path $scriptDir)) {
+        New-Item -ItemType Directory -Path $scriptDir -Force | Out-Null
     }
+
+    $extension = if ($OutputFormat -eq "csv") { "csv" } else { "json" }
+    $filename = "${ScriptName}-${Timestamp}.${extension}"
+    $outputPath = Join-Path -Path $scriptDir -ChildPath $filename
+
+    try {
+        switch ($extension) {
+            "json" {
+                $Result | Out-File -FilePath $outputPath -Encoding UTF8
+            }
+            "csv" {
+                $Result | Out-File -FilePath $outputPath -Encoding UTF8
+            }
+        }
+        Write-Host "Saved result to $outputPath" -ForegroundColor Green
+    } catch {
+        Write-Warning "Failed to save result for $ScriptName on $ServerName\: $_"
+    }
+}
+
+function Connect-RemoteServers {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.PSCredential]$Credential
+    )
+
+    $Global:ServerSessions = @{}
+    $AllServers = Import-Csv -Path ".\servers.csv"
+    $UpdatedServers = @()
+
+    foreach ($server in $AllServers) {
+        $ip = $server.ipaddress
+        if (-not $ip) {
+            Write-Warning "Empty or invalid server entry in CSV. Skipping."
+            $UpdatedServers += $server
+            continue
+        }
+
+        try {
+            $session = New-PSSession -ComputerName $ip -Credential $Credential -ErrorAction Stop
+
+            $os = Invoke-Command -Session $session -ScriptBlock {
+                (Get-CimInstance Win32_OperatingSystem).Caption
+            }
+            $build = Invoke-Command -Session $session -ScriptBlock {
+                (Get-CimInstance Win32_OperatingSystem).BuildNumber
+            }
+            $arch = Invoke-Command -Session $session -ScriptBlock {
+                $env:PROCESSOR_ARCHITECTURE
+            }
+            $hostname = Invoke-Command -Session $session -ScriptBlock {
+                (Get-CimInstance Win32_ComputerSystem).Name
+            }
+
+            $name = if ($server.name) { $server.name } else { $hostname }
+
+            $Global:ServerSessions[$name] = [pscustomobject]@{
+                Session = $session
+                IP = $ip
+                OS = $os
+                Build = $build
+                Arch = $arch
+            }
+
+            $UpdatedServers += [pscustomobject]@{
+                name      = $name
+                ipaddress = $ip
+                os        = if ($server.os)    { $server.os }    else { $os }
+                build     = if ($server.build) { $server.build } else { $build }
+                arch      = if ($server.arch)  { $server.arch }  else { $arch }
+            }
+
+            Write-Host "Connected to $name ($ip) - $os, Build $build, $arch" -ForegroundColor Green
+        }
+        catch {
+            Write-Warning "Failed to connect to $ip\: $_"
+            $UpdatedServers += $server
+        }
+    }
+
+    $UpdatedServers | Sort-Object name | Export-Csv -Path ".\servers.csv" -NoTypeInformation -Encoding UTF8
+    Write-Host "servers.csv updated with any enriched data." -ForegroundColor Yellow
 }

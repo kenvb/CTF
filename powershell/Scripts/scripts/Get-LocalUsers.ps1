@@ -32,4 +32,4 @@ function Get-LocalUsers {
 }
 
 # Example usage for local testing:
-Get-LocalUsers -ShowConsole
+Get-LocalUsers

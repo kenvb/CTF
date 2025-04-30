@@ -1,4 +1,4 @@
 ﻿"ipaddress","name","OS","Build","Arch"
-"10.0.2.7","DC","Microsoft Windows Server 2022 Standard Evaluation","20348","64-bit"
-"10.0.2.8","WINDOWSCLIENT","Microsoft Windows 10 Pro","19045","64-bit"
 "10.0.2.6","","","",""
+"10.0.2.7","DC","Microsoft Windows Server 2022 Standard Evaluation","20348","AMD64"
+"10.0.2.8","WINDOWSCLIENT","Microsoft Windows 10 Pro","19045","AMD64"

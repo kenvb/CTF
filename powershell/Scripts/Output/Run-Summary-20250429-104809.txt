@@ -1,5 +1,0 @@
-﻿Execution Summary (20250429-104809):
-
-WINDOWSCLIENT        Invoke-Diff          No Output                                                     0.11s
-WINDOWSCLIENT        Invoke-Diff          No Output                                                     0.08s
-WINDOWSCLIENT        Invoke-Diff          No Output                                                     0.06s

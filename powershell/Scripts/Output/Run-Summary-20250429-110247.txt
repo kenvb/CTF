@@ -1,6 +1,0 @@
-﻿Execution Summary (20250429-110247):
-
-DC                   Invoke-Diff          No Output                                                     0.21s
-WINDOWSCLIENT        Invoke-Diff          No Output                                                     0.09s
-DC                   Invoke-Diff          No Output                                                     0.06s
-WINDOWSCLIENT        Invoke-Diff          No Output                                                     0.04s

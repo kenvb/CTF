@@ -1,4 +1,0 @@
-﻿Execution Summary (20250421-182850):
-
-DC                   get-networkinfo      Success    .\Output\DC\get-networkinfo\get-networkinfo-20250421-182850.json 152.31s
-WINDOWSCLIENT        get-networkinfo      Success    .\Output\WINDOWSCLIENT\get-networkinfo\get-networkinfo-20250421-182850.json 152.32s

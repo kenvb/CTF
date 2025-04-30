@@ -1,6 +1,0 @@
-﻿Execution Summary (20250422-172011):
-
-DC                   get-proces           Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-proces\get-proces-20250422-172052.json 0.22s
-WINDOWSCLIENT        get-proces           Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\get-proces\get-proces-20250422-172053.json 0.16s
-DC                   get-service          Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-service\get-service-20250422-172132.json 0.11s
-WINDOWSCLIENT        get-service          Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\get-service\get-service-20250422-172132.json 0.42s

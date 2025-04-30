@@ -1,6 +1,0 @@
-﻿Execution Summary (20250428-231458):
-
-DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250428-232123.json 0.47s
-WINDOWSCLIENT        get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\get-networkinfo\get-networkinfo-20250428-232124.json 0.45s
-DC                   Get-ServiceList      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\Get-ServiceList\Get-ServiceList-20250428-232136.json 0.12s
-WINDOWSCLIENT        Get-ServiceList      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\Get-ServiceList\Get-ServiceList-20250428-232137.json 0.17s

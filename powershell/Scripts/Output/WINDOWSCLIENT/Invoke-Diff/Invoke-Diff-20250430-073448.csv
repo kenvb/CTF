@@ -1,6 +1,0 @@
-﻿"Name","Path","Description","Status","ShareType"
-"ADMIN$","C:\Windows","Remote Admin","OK",
-"C$","C:\","Default share","OK",
-"IPC$","","Remote IPC","OK",
-"NETLOGON","C:\Windows\SYSVOL\sysvol\kentest.internal\SCRIPTS","Logon server share ","OK",
-"SYSVOL","C:\Windows\SYSVOL\sysvol","Logon server share ","OK",

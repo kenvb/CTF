@@ -1,6 +1,0 @@
-﻿Execution Summary (20250422-182926):
-
-DC                   get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\get-networkinfo\get-networkinfo-20250422-183040.json 5.65s
-WINDOWSCLIENT        get-networkinfo      Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\get-networkinfo\get-networkinfo-20250422-183139.json 59.68s
-DC                   start-autoruns       Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\start-autoruns\start-autoruns-20250422-183155.json 0.08s
-WINDOWSCLIENT        start-autoruns       Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\start-autoruns\start-autoruns-20250422-183155.json 0.08s

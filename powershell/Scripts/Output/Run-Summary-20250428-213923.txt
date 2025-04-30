@@ -1,3 +1,0 @@
-﻿Execution Summary (20250428-213923):
-
-DC                   start-autoruns       Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\DC\start-autoruns\start-autoruns-20250428-214750.json 440.64s
