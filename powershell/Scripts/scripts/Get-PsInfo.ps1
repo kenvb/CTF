@@ -3,7 +3,7 @@ function Get-PsInfo {
     param(
         [Parameter()]
         [ValidateSet('CSV', 'JSON')]
-        [string]$OutputFormat = 'JSON',
+        [string]$OutputFormat = 'CSV',
 
         [switch]$ShowConsole
     )
@@ -19,7 +19,7 @@ function Get-PsInfo {
     }
 
     try {
-        $rawOutput = & $toolPath /accepteula /nobanner | Out-String
+        $rawOutput = & $toolPath /accepteula | Out-String
         $lines = $rawOutput -split "`r?`n" | Where-Object { $_ -match ":" }
 
         $parsed = foreach ($line in $lines) {
