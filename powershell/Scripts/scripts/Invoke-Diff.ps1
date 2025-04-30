@@ -1,19 +1,43 @@
+function Show-ConsolePreview {
+    param (
+        [Parameter(Mandatory)]
+        [string[]]$Data,
+
+        [ValidateSet('JSON', 'CSV')]
+        [string]$Format = 'JSON'
+    )
+
+    try {
+        if ($Format -eq 'JSON') {
+            $parsed = $Data -join "`n" | ConvertFrom-Json
+            if ($parsed -is [System.Collections.IEnumerable]) {
+                $parsed | Format-Table -AutoSize
+            } else {
+                $parsed | Format-List
+            }
+        } elseif ($Format -eq 'CSV') {
+            $parsed = $Data | ConvertFrom-Csv
+            $parsed | Format-Table -AutoSize
+        }
+    } catch {
+        Write-Warning "Preview failed: $($_.Exception.Message)"
+    }
+}
+
 function Invoke-Diff {
     [CmdletBinding()]
     param(
-        [Parameter()]
         [ValidateSet('CSV', 'JSON')]
         [string]$OutputFormat = 'JSON',
-
         [switch]$ShowConsole
     )
 
-    $outputRoot = Join-Path $PSScriptRoot "..\Output"
+    $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $outputRoot = Join-Path -Path $scriptPath -ChildPath "..\\Output"
 
     foreach ($serverFolder in Get-ChildItem -Path $outputRoot -Directory) {
         $serverName = $serverFolder.Name
 
-        # Skip folders that are not in the current ServerSessions
         if (-not $Global:ServerSessions.ContainsKey($serverName)) {
             Write-Host "Skipping unrelated folder: $serverName" -ForegroundColor Yellow
             continue
@@ -21,11 +45,19 @@ function Invoke-Diff {
 
         Write-Host "`n[+] Processing server: $serverName" -ForegroundColor Cyan
 
-        $scriptFolders = Get-ChildItem -Path $serverFolder.FullName -Directory | Where-Object { $_.Name -ne 'Invoke-Diff' }
+        $scriptFolders = Get-ChildItem -Path $serverFolder.FullName -Directory |
+            Where-Object { $_.Name -ne 'Invoke-Diff' }
 
         foreach ($scriptFolder in $scriptFolders) {
             $scriptName = $scriptFolder.Name
-            $jsonFiles = Get-ChildItem -Path $scriptFolder.FullName -Filter *.json | Sort-Object LastWriteTime
+            $scriptPath = $scriptFolder.FullName
+
+            if (-not (Test-Path $scriptPath)) {
+                Write-Host "  [!] Skipping $scriptName (folder missing)" -ForegroundColor Yellow
+                continue
+            }
+
+            $jsonFiles = Get-ChildItem -Path $scriptPath -Filter *.json | Sort-Object LastWriteTime
 
             if ($jsonFiles.Count -lt 2) {
                 Write-Host "  [!] Skipping $scriptName (not enough output files to diff)" -ForegroundColor Yellow
@@ -39,7 +71,6 @@ function Invoke-Diff {
                 Write-Warning "Failed to parse JSON for ${scriptName} on ${serverName}: $($_.Exception.Message)"
                 continue
             }
-          
 
             $diff = Compare-Object -ReferenceObject $previousContent -DifferenceObject $latestContent -Property * -PassThru
 
@@ -48,8 +79,7 @@ function Invoke-Diff {
                 continue
             }
 
-            # Save the diff
-            $diffFolder = Join-Path -Path $serverFolder.FullName -ChildPath "Invoke-Diff\$scriptName"
+            $diffFolder = Join-Path -Path $serverFolder.FullName -ChildPath "Invoke-Diff\\$scriptName"
             if (-not (Test-Path $diffFolder)) {
                 New-Item -Path $diffFolder -ItemType Directory -Force | Out-Null
             }
@@ -63,7 +93,6 @@ function Invoke-Diff {
                 $outData = $diff | ConvertTo-Json -Depth 5
             }
 
-            # Save as Base64-encoded file
             $encoded = [System.Text.Encoding]::UTF8.GetBytes(($outData -join "`n"))
             $base64 = [Convert]::ToBase64String($encoded)
             [System.IO.File]::WriteAllText($diffPath, $base64, [System.Text.Encoding]::UTF8)
@@ -77,5 +106,5 @@ function Invoke-Diff {
     }
 }
 
-# Example usage:
- Invoke-Diff
+# Example usage (run locally):
+Invoke-Diff

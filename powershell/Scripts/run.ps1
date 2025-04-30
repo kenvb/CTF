@@ -1,251 +1,171 @@
-Import-Module .\Select-Targets.psm1 -Force
-Import-Module .\ToolSync.psm1 -Force
-Import-Module .\CommonUtils.psm1 -Force
+# run.ps1 - Final Version (multi-script, multi-server, full interactive)
 
-# === Initial setup ===
-$csvPath = ".\servers.csv"
-$outputRoot = Join-Path -Path $PSScriptRoot -ChildPath "Output"
-$runTimestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-$combinedSummary = @()
+# Import required modules
+Import-Module .\CommonUtils.psm1
+Import-Module .\Select-Targets.psm1
+Import-Module .\ToolSync.psm1
 
-$servers = Import-Csv -Path $csvPath
-$cred = Get-Credential
-$Global:ServerSessions = @{}
-$updatedServerData = @()
+# Prompt for credentials
+$Cred = Get-Credential -Message "Enter credentials for remote session access."
 
-foreach ($server in $servers) {
-    $ip = $server.ipaddress
-    if (-not $ip) { continue }
+# Ensure output folder exists
+if (-not (Test-Path -Path "Output")) {
+    New-Item -Path "Output" -ItemType Directory | Out-Null
+}
 
-    $existingName  = $server.name
-    $existingOS    = $server.OS
-    $existingBuild = $server.Build
-    $existingArch  = $server.Arch
+# Load server sessions
+$ServerSessions = @{ }
+$Servers = Import-Csv -Path .\servers.csv
 
-    Write-Host "Connecting to $ip..."
+# Create sessions with provided credentials
+$ConnectedServers = @()
+$FailedServers = @()
 
-    $session = New-PSSession -ComputerName $ip -Credential $cred -ErrorAction SilentlyContinue
-    if ($session) {
-        $sysInfo = Invoke-Command -Session $session -ScriptBlock {
-            $os = Get-CimInstance Win32_OperatingSystem
-            [pscustomobject]@{
-                Hostname = $env:COMPUTERNAME
-                OS       = $os.Caption
-                Build    = $os.BuildNumber
-                Arch     = $os.OSArchitecture
+foreach ($Server in $Servers) {
+    try {
+        if (-not [string]::IsNullOrWhiteSpace($Server.Name)) {
+            $Session = New-PSSession -ComputerName $Server.Name -Credential $Cred -ErrorAction Stop
+
+            # Gather OS, Build, and Architecture information
+            $osInfo = Invoke-Command -Session $Session -ScriptBlock {
+                Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object Caption, BuildNumber
             }
+
+            $csInfo = Invoke-Command -Session $Session -ScriptBlock {
+                Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object SystemType
+            }
+
+            $ServerSessions[$Server.Name] = @{ 
+                Session = $Session
+                OS = $osInfo.Caption
+                Build = $osInfo.BuildNumber
+                Arch = $csInfo.SystemType
+            }
+
+            $ConnectedServers += $Server.Name
         }
-
-        $finalName  = if ($existingName)  { $existingName }  else { $sysInfo.Hostname }
-        $finalOS    = if ($existingOS)    { $existingOS }    else { $sysInfo.OS }
-        $finalBuild = if ($existingBuild) { $existingBuild } else { $sysInfo.Build }
-        $finalArch  = if ($existingArch)  { $existingArch }  else { $sysInfo.Arch }
-
-        Write-Host "  [OK] $finalName ($ip) - $finalOS, Build $finalBuild, $finalArch" -ForegroundColor Green
-
-        $Global:ServerSessions[$finalName] = @{
-            Session = $session
-            OS      = $finalOS
-            Build   = $finalBuild
-            Arch    = $finalArch
+        else {
+            Write-Warning "Empty or invalid server name in CSV. Skipping."
         }
-
-        $updatedServerData += [pscustomobject]@{
-            ipaddress = $ip
-            name      = $finalName
-            OS        = $finalOS
-            Build     = $finalBuild
-            Arch      = $finalArch
-        }
-    } else {
-        Write-Host "  [FAILED] Could not connect to $ip" -ForegroundColor Red
-        $updatedServerData += $server
+    }
+    catch {
+        Write-Warning "Failed to connect to $($Server.Name): $_"
+        $FailedServers += $Server.Name
     }
 }
 
-# Update servers.csv
-$updatedServerData | Export-Csv -Path $csvPath -NoTypeInformation -Encoding UTF8
+# Save globally if needed elsewhere
+$Global:ServerSessions = $ServerSessions
 
-# === Script execution loop ===
-do {
-    # --- Session health check ---
-    $Global:DisconnectedServers = @()
+# Display connection summary
+Write-Host "`n--- Connection Summary ---" -ForegroundColor Cyan
+Write-Host "Connected Servers:`n  $($ConnectedServers -join ", ")" -ForegroundColor Green
+if ($FailedServers.Count -gt 0) {
+    Write-Host "Failed Servers:`n  $($FailedServers -join ", ")" -ForegroundColor Red
+}
 
-    $toRemove = @()
-    foreach ($entry in $Global:ServerSessions.GetEnumerator()) {
-        if (-not (Test-SessionAlive -Session $entry.Value.Session)) {
-            Write-Host "Session to $($entry.Key) died. Attempting silent reconnect..." -ForegroundColor Yellow
-            $toRemove += $entry.Key
+# Set console preview mode
+$ShowConsole = $false
 
-            $Global:DisconnectedServers += [pscustomobject]@{
-                IP    = (Get-ServerIP -Name $entry.Key)
-                Name  = $entry.Key
-                OS    = $entry.Value.OS
-                Build = $entry.Value.Build
-                Arch  = $entry.Value.Arch
-            }
-        }
-    }
-    foreach ($dead in $toRemove) {
-        $Global:ServerSessions.Remove($dead)
+# Main script execution loop
+while ($true) {
+    # Select servers interactively
+    $SelectedServers = Select-RemoteServers -SessionMap $ServerSessions
+    if (-not $SelectedServers -or $SelectedServers.Count -eq 0) {
+        Write-Warning "No servers selected (empty input). Returning to menu."
+        continue
     }
 
-    foreach ($entry in $Global:DisconnectedServers) {
-        try {
-            $session = New-PSSession -ComputerName $entry.IP -Credential $cred -ErrorAction Stop
-            if ($session) {
-                Write-Host "  [RECONNECTED] $($entry.Name)" -ForegroundColor Green
-                $Global:ServerSessions[$entry.Name] = @{
-                    Session = $session
-                    OS      = $entry.OS
-                    Build   = $entry.Build
-                    Arch    = $entry.Arch
+    # Select scripts interactively
+    $SelectedScripts = Select-ScriptsToRun
+    if (-not $SelectedScripts -or $SelectedScripts.Count -eq 0) {
+        Write-Warning "No scripts selected (empty input). Returning to menu."
+        continue
+    }
+
+    foreach ($ScriptFile in $SelectedScripts) {
+        $ScriptPath = $ScriptFile.FullName
+        $ScriptName = [System.IO.Path]::GetFileNameWithoutExtension($ScriptFile.Name)
+
+        foreach ($ServerName in $SelectedServers) {
+
+                # Sync supporting tools if needed
+                if ($ScriptName -eq "start-autoruns") {
+                    $null = Copy-RemoteToolOnce -Session $Session -ToolName "autorunsc.exe"
                 }
-            }
-        }
-        catch {
-            Write-Warning "  [FAILED] Still cannot reach $($entry.Name) ($($entry.IP))"
-        }
-    }
-    # --- End of session health check ---
-
-    $selectedServers = Select-RemoteServers -SessionMap $Global:ServerSessions
-    if (-not $selectedServers) {
-        Write-Warning "No servers selected. Exiting loop."
-        break
-    }
-
-    Write-Host "`nSelect a script to run:"
-    Write-Host "  0. Run all scripts"
-    $selectedScript = Select-ScriptToRun
-
-    $scriptList = @()
-    $customScriptContent = $null
-
-    if ($selectedScript -eq '0') {
-        $scriptList = Get-ChildItem -Path ".\Scripts" -Filter *.ps1 | Sort-Object Name
-    } elseif ($selectedScript -eq 'C') {
-        Write-Host "`nEnter your custom PowerShell script. Press Enter on an empty line to finish:`n" -ForegroundColor Yellow
-        $lines = @()
-        do {
-            $line = Read-Host ">"
-            if ($line -eq '') { break }
-            $lines += $line
-        } while ($true)
-
-        if ($lines.Count -eq 0) {
-            Write-Warning "No script entered. Returning to menu."
-            continue
-        }
-
-        $customScriptContent = $lines -join "`n"
-        $scriptList = @("custom-inline")
-    } else {
-        $scriptList = @((Get-Item $selectedScript))
-    }
-
-    foreach ($script in $scriptList) {
-        if ($script -is [string] -and $script -eq "custom-inline") {
-            $scriptName = "custom-inline"
-        } else {
-            $scriptName = [System.IO.Path]::GetFileNameWithoutExtension($script.Name)
-        }
-
-        foreach ($server in $selectedServers) {
-            Write-Host "Running script: $scriptName on $server"
-            $serverStart = Get-Date
-            $session = $Global:ServerSessions[$server].Session
-            $output = $null
-            $decoded = $null
-            $savedPath = ""
-            $status = ""
-
-            # --- TOOL SYNC HOOK EXAMPLE ---
-            if ($scriptName -eq "start-autoruns") {
-                $null = Copy-RemoteToolOnce -Session $session -ToolName "autorunsc.exe"
-            }
-            if ($scriptName -eq "get-psinfo") {
-                $null = Copy-RemoteToolOnce -Session $session -ToolName "PsInfo.exe"
-            }
-            if ($scriptName -eq "get-psloggedon") {
-                $null = Copy-RemoteToolOnce -Session $session -ToolName "PsLoggedOn.exe"
-            }
-                       
-            # Example:
-            # if ($scriptName -eq "run-sysinternals") { $null = Copy-RemoteToolOnce -Session $session -ToolName "PsExec.exe" }
-            # --- END TOOL SYNC ---
-
-            try {
-                if ($scriptName -eq "custom-inline") {
-                    $output = Invoke-Command -Session $session -ScriptBlock ([ScriptBlock]::Create($customScriptContent)) -ErrorAction Stop
-                } else {
-                    $scriptContent = Get-Content -Path $script.FullName -Raw
-                    $output = Invoke-Command -Session $session -ScriptBlock ([ScriptBlock]::Create($scriptContent)) -ErrorAction Stop
+                if ($ScriptName -eq "get-psinfo") {
+                    $null = Copy-RemoteToolOnce -Session $Session -ToolName "PsInfo.exe"
                 }
+                if ($ScriptName -eq "get-psloggedon") {
+                    $null = Copy-RemoteToolOnce -Session $Session -ToolName "PsLoggedOn.exe"
+                }
+            
+                # ... rest of your script logic ...
+            
 
-                $output = $output | Out-String
-                $decoded = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($output.Trim()))
-            } catch {
-                Write-Warning "Failed to run $scriptName on ${server}: $($_.Exception.Message)"
+            
+            
+
+            if (-not $ServerSessions.ContainsKey($ServerName)) {
+                Write-Warning "No session available for $ServerName. Skipping."
+                continue
             }
 
-            if ($decoded) {
-                $path = Join-Path $outputRoot "$server\$scriptName"
-                if (-not (Test-Path $path)) {
-                    New-Item -Path $path -ItemType Directory -Force | Out-Null
-                }
+            $Session = $ServerSessions[$ServerName].Session
 
-                $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-                $file = Join-Path $path "$scriptName-$timestamp.json"
-                [System.IO.File]::WriteAllText($file, $decoded, [System.Text.Encoding]::UTF8)
-                $savedPath = $file
-                $status = "Success"
+            Write-Host "Running $ScriptName on $ServerName..." -ForegroundColor Green
 
-                if ($scriptName -eq "custom-inline") {
-                    Write-Host "`n--- Output from $server ---"
-                    Write-Host $decoded.Trim()
-                    Write-Host "--------------------------------`n"
-                } else {
+            $Timestamp = Get-SafeTimestamp
+
+            switch ($ScriptName) {
+                'Invoke-Diff' {
                     try {
-                        $parsed = $decoded | ConvertFrom-Json
-                        if ($parsed -is [System.Collections.IEnumerable]) {
-                            Write-Host "`n--- Result Preview for $server ---"
-                            $parsed | Format-Table -AutoSize
-                            Write-Host "-----------------------------------`n"
-                        }
-                    } catch {
-                        Write-Host "`n${server}: Output saved, not displayed (non-JSON)"
+                        $Result = & $ScriptPath -Session $Session
+                    }
+                    catch {
+                        Write-Warning "Invoke-Diff failed to execute locally on $ServerName`: $_"
+                        continue
                     }
                 }
-            } else {
-                $status = "No Output"
+                'ToolSync' {
+                    try {
+                        $Result = & $ScriptPath -Session $Session
+                    }
+                    catch {
+                        Write-Warning "ToolSync failed to sync tools on $ServerName`: $_"
+                        continue
+                    }
+                }
+                default {
+                    try {
+                        $Result = Invoke-Command -Session $Session -ScriptBlock (Get-Command $ScriptPath).ScriptBlock
+                    }
+                    catch {
+                        Write-Warning "Remote script execution failed on $ServerName`: $_"
+                        continue
+                    }
+                }
             }
 
-            $duration = (Get-Date) - $serverStart
-            $combinedSummary += [pscustomobject]@{
-                Server     = $server
-                Script     = $scriptName
-                Status     = $status
-                OutputFile = $savedPath
-                Duration   = "{0:N2}s" -f $duration.TotalSeconds
+            if ($Result) {
+                try {
+                    if ($Result -match '^[A-Za-z0-9+/=]+$' -and ($Result.Length % 4) -eq 0) {
+                        $DecodedResult = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Result))
+                        Save-ResultToFile -Result $DecodedResult -ServerName $ServerName -ScriptName $ScriptName -Timestamp $Timestamp -ShowConsole:$ShowConsole
+                    }
+                    else {
+                        Save-ResultToFile -Result $Result -ServerName $ServerName -ScriptName $ScriptName -Timestamp $Timestamp -ShowConsole:$ShowConsole
+                    }
+                }
+                catch {
+                    Write-Warning "Failed to save result for $ScriptName on $ServerName`: $_"
+                }
+            }
+            else {
+                Write-Warning "No result returned by $ScriptName on $ServerName."
             }
         }
     }
-
-} while ($true)
-
-# === Final summary ===
-if ($combinedSummary.Count) {
-    $summaryPath = Join-Path $outputRoot "Run-Summary-$runTimestamp.txt"
-    $summaryLines = @("Execution Summary ($runTimestamp):`n")
-    foreach ($entry in $combinedSummary) {
-        $summaryLines += "{0,-20} {1,-20} {2,-10} {3,-50} {4}" -f $entry.Server, $entry.Script, $entry.Status, $entry.OutputFile, $entry.Duration
-    }
-
-    $summaryLines | Out-File -FilePath $summaryPath -Encoding UTF8
-
-    Write-Host "`n=== Combined Summary Report ===" -ForegroundColor Cyan
-    $summaryLines | ForEach-Object { Write-Host $_ }
-    Write-Host ""
-    Write-Host "Saved to: $summaryPath"
 }
+
+Write-Host "Session ended. Thank you." -ForegroundColor Cyan

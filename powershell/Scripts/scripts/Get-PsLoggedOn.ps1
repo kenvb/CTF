@@ -19,7 +19,7 @@ function Get-PsLoggedOn {
     }
 
     try {
-        $rawOutput = & $toolPath /accepteula | Out-String
+        $rawOutput = & $toolPath /accepteula /nobanner | Out-String
         $lines = $rawOutput -split "`r?`n" | Where-Object { $_ -match "^\s*\S" }
 
         $parsed = foreach ($line in $lines) {

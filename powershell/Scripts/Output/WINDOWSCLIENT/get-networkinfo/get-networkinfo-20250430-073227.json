@@ -1,0 +1,219 @@
+﻿{
+    "IPAddresses":  [
+                        {
+                            "InterfaceAlias":  "Ethernet",
+                            "IPAddress":  "fe80::e8f6:41b5:b60:828f%4",
+                            "AddressFamily":  23
+                        },
+                        {
+                            "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                            "IPAddress":  "::1",
+                            "AddressFamily":  23
+                        },
+                        {
+                            "InterfaceAlias":  "Ethernet",
+                            "IPAddress":  "10.0.2.8",
+                            "AddressFamily":  2
+                        },
+                        {
+                            "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                            "IPAddress":  "127.0.0.1",
+                            "AddressFamily":  2
+                        }
+                    ],
+    "RoutingTable":  [
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "255.255.255.255/32",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                             "DestinationPrefix":  "255.255.255.255/32",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "224.0.0.0/4",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                             "DestinationPrefix":  "224.0.0.0/4",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                             "DestinationPrefix":  "127.255.255.255/32",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                             "DestinationPrefix":  "127.0.0.1/32",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                             "DestinationPrefix":  "127.0.0.0/8",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "10.0.2.255/32",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "10.0.2.8/32",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "10.0.2.0/24",
+                             "NextHop":  "0.0.0.0",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "0.0.0.0/0",
+                             "NextHop":  "10.0.2.1",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "ff00::/8",
+                             "NextHop":  "::",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                             "DestinationPrefix":  "ff00::/8",
+                             "NextHop":  "::",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "fe80::e8f6:41b5:b60:828f/128",
+                             "NextHop":  "::",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Ethernet",
+                             "DestinationPrefix":  "fe80::/64",
+                             "NextHop":  "::",
+                             "RouteMetric":  256
+                         },
+                         {
+                             "InterfaceAlias":  "Loopback Pseudo-Interface 1",
+                             "DestinationPrefix":  "::1/128",
+                             "NextHop":  "::",
+                             "RouteMetric":  256
+                         }
+                     ],
+    "ListeningPorts":  [
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49669,
+                               "OwningProcess":  700
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49668,
+                               "OwningProcess":  720
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49667,
+                               "OwningProcess":  1480
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49666,
+                               "OwningProcess":  1156
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49665,
+                               "OwningProcess":  556
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  49664,
+                               "OwningProcess":  720
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  47001,
+                               "OwningProcess":  4
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  5985,
+                               "OwningProcess":  4
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  445,
+                               "OwningProcess":  4
+                           },
+                           {
+                               "LocalAddress":  "::",
+                               "LocalPort":  135,
+                               "OwningProcess":  968
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49669,
+                               "OwningProcess":  700
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49668,
+                               "OwningProcess":  720
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49667,
+                               "OwningProcess":  1480
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49666,
+                               "OwningProcess":  1156
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49665,
+                               "OwningProcess":  556
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  49664,
+                               "OwningProcess":  720
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  5040,
+                               "OwningProcess":  5376
+                           },
+                           {
+                               "LocalAddress":  "10.0.2.8",
+                               "LocalPort":  139,
+                               "OwningProcess":  4
+                           },
+                           {
+                               "LocalAddress":  "0.0.0.0",
+                               "LocalPort":  135,
+                               "OwningProcess":  968
+                           }
+                       ]
+}

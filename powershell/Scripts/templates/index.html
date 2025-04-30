@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}Servers{% endblock %}
+{% block content %}
+<h2>Servers</h2>
+<input class="form-control mb-3" id="serverFilter" placeholder="Filter servers...">
+<ul class="list-group" id="serverList">
+    {% for server in servers %}
+    <li class="list-group-item">
+        <a href="{{ url_for('server_view', server_name=server) }}">{{ server }}</a>
+    </li>
+    {% endfor %}
+</ul>
+<script>
+document.getElementById("serverFilter").addEventListener("input", function() {
+    let filter = this.value.toLowerCase();
+    let items = document.querySelectorAll("#serverList li");
+    items.forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(filter) ? "" : "none";
+    });
+});
+</script>
+{% endblock %}

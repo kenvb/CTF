@@ -1,0 +1,74 @@
+﻿[
+    {
+        "Service":  "Spooler",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "Fax",
+        "Status":  "Failed: Cannot find any service with service name \u0027Fax\u0027."
+    },
+    {
+        "Service":  "UmRdpService",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "WerSvc",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "bthserv",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "WMPNetworkSvc",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "WbioSrvc",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "xsd",
+        "Status":  "Failed: Cannot find any service with service name \u0027xsd\u0027."
+    },
+    {
+        "Service":  "RemoteRegistry",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "seclogon",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "SSDPSRV",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "wcncsvc",
+        "Status":  "Failed: Cannot find any service with service name \u0027wcncsvc\u0027."
+    },
+    {
+        "Service":  "CSC",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "XblAuthManager",
+        "Status":  "Failed: Cannot find any service with service name \u0027XblAuthManager\u0027."
+    },
+    {
+        "Service":  "XblGameSave",
+        "Status":  "Failed: Cannot find any service with service name \u0027XblGameSave\u0027."
+    },
+    {
+        "Service":  "XboxNetApiSvc",
+        "Status":  "Failed: Cannot find any service with service name \u0027XboxNetApiSvc\u0027."
+    },
+    {
+        "Service":  "SharedAccess",
+        "Status":  "Disabled and stopped successfully"
+    },
+    {
+        "Service":  "SCardSvr",
+        "Status":  "Disabled and stopped successfully"
+    }
+]

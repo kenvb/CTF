@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Scripts for {{ server }}{% endblock %}
+{% block content %}
+<h2>Scripts for {{ server }}</h2>
+<input class="form-control mb-3" id="scriptFilter" placeholder="Filter scripts...">
+<ul class="list-group" id="scriptList">
+    {% for script in scripts %}
+    <li class="list-group-item">
+        <a href="{{ url_for('script_view', server_name=server, script_name=script) }}">{{ script }}</a>
+    </li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">← Back to servers</a>
+<script>
+document.getElementById("scriptFilter").addEventListener("input", function() {
+    let filter = this.value.toLowerCase();
+    let items = document.querySelectorAll("#scriptList li");
+    items.forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(filter) ? "" : "none";
+    });
+});
+</script>
+{% endblock %}

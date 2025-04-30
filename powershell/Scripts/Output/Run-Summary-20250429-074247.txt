@@ -1,0 +1,13 @@
+﻿Execution Summary (20250429-074247):
+
+WINDOWSCLIENT        Get-PsInfo           No Output                                                     13.04s
+WINDOWSCLIENT        Get-PsInfo           No Output                                                     0.22s
+WINDOWSCLIENT        Get-PsLoggedOn       Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\Get-PsLoggedOn\Get-PsLoggedOn-20250429-075108.json 0.26s
+WINDOWSCLIENT        Get-PsInfo           No Output                                                     0.25s
+WINDOWSCLIENT        Get-SharedFolder     Success    C:\Users\Kenmo\Documents\ctf\powershell\Scripts\Output\WINDOWSCLIENT\Get-SharedFolder\Get-SharedFolder-20250429-075311.json 0.11s
+WINDOWSCLIENT        Invoke-Diff          No Output                                                     0.08s
+WINDOWSCLIENT        Invoke-Diff          No Output                                                     0.02s
+WINDOWSCLIENT        Invoke-Diff          No Output                                                     12.14s
+WINDOWSCLIENT        Invoke-Diff          No Output                                                     12.12s
+WINDOWSCLIENT        Invoke-Diff          No Output                                                     0.02s
+WINDOWSCLIENT        Invoke-Diff          No Output                                                     12.15s

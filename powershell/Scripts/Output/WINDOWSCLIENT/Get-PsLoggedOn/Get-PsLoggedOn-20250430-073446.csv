@@ -1,0 +1,14 @@
+﻿[
+    {
+        "LoggedOn":  "Users logged on locally:"
+    },
+    {
+        "LoggedOn":  "4/29/2025 10:41:07 AM    \tKENTEST\\Administrator"
+    },
+    {
+        "LoggedOn":  "Users logged on via resource shares:"
+    },
+    {
+        "LoggedOn":  "4/29/2025 10:32:17 PM    \t(null)\\ANONYMOUS LOGON"
+    }
+]

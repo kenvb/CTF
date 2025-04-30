@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}{{ script }} output for {{ server }}{% endblock %}
+{% block content %}
+<h2>{{ script }} on {{ server }}</h2>
+<input class="form-control mb-3" id="jsonFilter" placeholder="Filter JSON...">
+<pre class="bg-white p-3 border rounded" id="jsonOutput">{{ data | tojson(indent=2) }}</pre>
+<a href="{{ url_for('server_view', server_name=server) }}" class="btn btn-secondary mt-3">← Back to scripts</a>
+<script>
+document.getElementById("jsonFilter").addEventListener("input", function() {
+    const filter = this.value.toLowerCase();
+    const original = {{ data | tojson }};
+    const output = JSON.stringify(original, null, 2)
+        .split('\n')
+        .filter(line => line.toLowerCase().includes(filter))
+        .join('\n');
+    document.getElementById("jsonOutput").textContent = output || "{}";
+});
+</script>
+{% endblock %}
