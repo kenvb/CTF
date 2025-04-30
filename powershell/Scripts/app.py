@@ -57,25 +57,46 @@ def script_view(server, script):
     if not os.path.isdir(script_dir):
         abort(404)
 
+    # Find all matching files
     files = glob.glob(os.path.join(script_dir, f"{script}-*.json")) + \
             glob.glob(os.path.join(script_dir, f"{script}-*.csv"))
-    files = sorted(files, key=extract_timestamp)
-    print("---- DEBUG INFO ----")
-    print("Script folder:", script_dir)
-    print("Found files:")
+
+    # DEBUG
+    print("---- DEBUG ----")
+    print("Script dir:", script_dir)
+    print("Raw files found:")
     for f in files:
-        print("  ", os.path.basename(f), extract_timestamp(f))
-    print("Latest file:", os.path.basename(latest_file))
-    print("Previous file:", os.path.basename(previous_file) if previous_file else "None")
-    print("Extension:", ext)
-    print("---------------------")
+        print(" -", os.path.basename(f))
+    print("----------------")
 
-
-    if len(files) == 0:
+    if not files:
+        print("No files found.")
         abort(404)
+
+    # Sort using timestamp in filename
+    def extract_timestamp(file_path):
+        filename = os.path.basename(file_path)
+        match = re.search(r'(\d{8}-\d{6})', filename)
+        if match:
+            try:
+                return datetime.strptime(match.group(1), "%Y%m%d-%H%M%S")
+            except ValueError:
+                pass
+        return datetime.min
+
+    files = sorted(files, key=extract_timestamp)
+
+    # Show after sorting
+    print("Sorted files:")
+    for f in files:
+        print(" -", os.path.basename(f), extract_timestamp(f))
 
     latest_file = files[-1]
     previous_file = files[-2] if len(files) >= 2 else None
+
+    print("Latest:", os.path.basename(latest_file))
+    print("Previous:", os.path.basename(previous_file) if previous_file else "None")
+
     ext = os.path.splitext(latest_file)[1].lower()
 
     latest_content = open(latest_file, encoding="utf-8-sig").read()
@@ -114,6 +135,7 @@ def script_view(server, script):
                            parsed_output=parsed_output,
                            raw_output=latest_content,
                            diff=diff_output)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
