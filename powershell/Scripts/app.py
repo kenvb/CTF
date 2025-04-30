@@ -125,6 +125,10 @@ def script_view(server, script):
 
             diff = unified_diff(previous_lines, latest_lines, fromfile='previous', tofile='latest', lineterm='')
             diff_output = '\n'.join(diff)
+            print("=== DIFF OUTPUT ===")
+            print(diff_output[:500])  # show up to 500 characters
+            print("===================")
+
         except Exception as e:
             diff_output = f"[Error parsing CSV diff] {e}"
 
