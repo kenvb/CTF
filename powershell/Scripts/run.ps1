@@ -45,6 +45,9 @@ while ($true) {
                 if ($scriptName -eq "get-psloggedon") {
                     Copy-RemoteToolOnce -Session $session -ToolName "PsLoggedOn.exe"
                 }
+                if ($scriptName -eq "Get-Sigcheck") {
+                    Copy-RemoteToolOnce -Session $session -ToolName "sigcheck.exe"
+                }
 
                 $scriptContent = Get-Content -Path $scriptPath -Raw
                 $Result = Invoke-Command -Session $session -ScriptBlock ([ScriptBlock]::Create($scriptContent)) -ErrorAction Stop

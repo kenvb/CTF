@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Available Servers</title>
+    <title>Scripts on {{ server }}</title>
     <style>
         body { font-family: sans-serif; background: #f4f4f4; padding: 1em; }
         ul { list-style: none; padding: 0; }
@@ -12,11 +12,14 @@
     </style>
 </head>
 <body>
-<h1>Servers</h1>
+<h1>Scripts on {{ server }}</h1>
+
 <ul>
-    {% for server in servers %}
-    <li><a href="{{ url_for('server_view', server=server) }}">{{ server }}</a></li>
+    {% for script in scripts %}
+    <li><a href="{{ url_for('script_view', server=server, script=script) }}">{{ script }}</a></li>
     {% endfor %}
 </ul>
+
+<p><a href="{{ url_for('index') }}">⬅ Back to all servers</a></p>
 </body>
 </html>

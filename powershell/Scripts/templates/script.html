@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ script }} on {{ server }}</title>
+    <style>
+        body { font-family: monospace; white-space: pre; background: #f7f7f7; padding: 1em; }
+        .diff { background: #fffbe6; border-left: 3px solid #ffa; margin-top: 1em; padding: 0.5em; }
+        .output { background: #e8f5e9; border-left: 3px solid #4caf50; padding: 0.5em; }
+    </style>
+</head>
+<body>
+<h1>{{ script }} on {{ server }}</h1>
+
+<h2>Latest Output</h2>
+<div class="output">{{ output }}</div>
+
+{% if diff %}
+<h2>Diff with Previous</h2>
+<div class="diff">{{ diff }}</div>
+{% else %}
+<p><em>No diff available (first run or only one result found).</em></p>
+{% endif %}
+
+<p><a href="/">⬅ Back</a></p>
+</body>
+</html>

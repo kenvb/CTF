@@ -2,69 +2,74 @@ from flask import Flask, render_template, send_file, abort
 import os
 import json
 import csv
-from pathlib import Path
+import glob
+from datetime import datetime
+from deepdiff import DeepDiff
 
 app = Flask(__name__)
 
-# Path to your collected output data
-DATA_FOLDER = Path("./Output")
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+OUTPUT_DIR = os.path.join(BASE_DIR, "Output")
 
 @app.route("/")
 def index():
-    if not DATA_FOLDER.exists():
-        return "Data folder not found.", 500
-
-    servers = sorted(
-        [d.name for d in DATA_FOLDER.iterdir() if d.is_dir()],
-        key=lambda name: os.path.getmtime(DATA_FOLDER / name),
-        reverse=True
-    )
+    servers = sorted(os.listdir(OUTPUT_DIR))
     return render_template("index.html", servers=servers)
 
-@app.route("/server/<server_name>")
-def server_view(server_name):
-    server_path = DATA_FOLDER / server_name
-    if not server_path.exists():
+@app.route("/server/<server>")
+def server_view(server):
+    server_dir = os.path.join(OUTPUT_DIR, server)
+    if not os.path.isdir(server_dir):
+        abort(404)
+    scripts = sorted(os.listdir(server_dir))
+    return render_template("server.html", server=server, scripts=scripts)
+
+@app.route("/script/<server>/<script>")
+def script_view(server, script):
+    script_dir = os.path.join(OUTPUT_DIR, server, script)
+    if not os.path.isdir(script_dir):
         abort(404)
 
-    scripts = sorted(
-        [d.name for d in server_path.iterdir() if d.is_dir()],
-        key=lambda name: os.path.getmtime(server_path / name),
-        reverse=True
-    )
-    return render_template("server_view.html", server=server_name, scripts=scripts)
-
-@app.route("/server/<server_name>/<script_name>")
-def script_view(server_name, script_name):
-    script_path = DATA_FOLDER / server_name / script_name
-    if not script_path.exists():
+    files = sorted(glob.glob(os.path.join(script_dir, f"{script}-*.json")) +
+                   glob.glob(os.path.join(script_dir, f"{script}-*.csv")))
+    if len(files) == 0:
         abort(404)
 
-    files = sorted(
-        [f for f in script_path.glob("*") if f.is_file()],
-        key=os.path.getmtime,
-        reverse=True
-    )
+    latest_file = files[-1]
+    previous_file = files[-2] if len(files) >= 2 else None
+    ext = os.path.splitext(latest_file)[1].lower()
 
-    if not files:
-        return render_template("no_output.html", server=server_name, script=script_name)
+    latest_content = open(latest_file, encoding="utf-8-sig").read()
+    previous_content = open(previous_file, encoding="utf-8-sig").read() if previous_file else None
+    diff_output = None
 
-    latest_file = files[0]
+    if ext == ".json":
+        try:
+            latest_json = json.loads(latest_content)
+            previous_json = json.loads(previous_content) if previous_content else None
+            if previous_json:
+                diff = DeepDiff(previous_json, latest_json, ignore_order=True)
+                diff_output = json.dumps(diff, indent=2)
+        except Exception as e:
+            diff_output = f"[Error parsing JSON diff] {e}"
 
-    # Determine file type
-    if latest_file.suffix == ".json":
-        with open(latest_file, "r", encoding="utf-8-sig") as f:
-            data = json.load(f)
-        return render_template("view_json.html", server=server_name, script=script_name, data=data)
+    elif ext == ".csv":
+        try:
+            latest_lines = latest_content.strip().splitlines()
+            previous_lines = previous_content.strip().splitlines() if previous_content else []
 
-    elif latest_file.suffix == ".csv":
-        with open(latest_file, "r", encoding="utf-8") as f:
-            reader = csv.reader(f)
-            rows = list(reader)
-        return render_template("view_csv.html", server=server_name, script=script_name, rows=rows)
+            from difflib import unified_diff
+            diff = unified_diff(previous_lines, latest_lines, fromfile='previous', tofile='latest', lineterm='')
+            diff_output = '\n'.join(diff)
+        except Exception as e:
+            diff_output = f"[Error parsing CSV diff] {e}"
 
-    else:
-        return send_file(latest_file)
+    return render_template("script.html",
+                           server=server,
+                           script=script,
+                           output=latest_content,
+                           extension=ext,
+                           diff=diff_output)
 
 if __name__ == "__main__":
     app.run(debug=True)
