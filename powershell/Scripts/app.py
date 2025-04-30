@@ -42,12 +42,14 @@ def script_view(server, script):
     latest_content = open(latest_file, encoding="utf-8-sig").read()
     previous_content = open(previous_file, encoding="utf-8-sig").read() if previous_file else None
     diff_output = None
+    parsed_output = None
 
     if ext == ".json":
         try:
             latest_json = json.loads(latest_content)
-            previous_json = json.loads(previous_content) if previous_content else None
-            if previous_json:
+            parsed_output = latest_json
+            if previous_content:
+                previous_json = json.loads(previous_content)
                 diff = DeepDiff(previous_json, latest_json, ignore_order=True)
                 diff_output = json.dumps(diff, indent=2)
         except Exception as e:
@@ -58,6 +60,9 @@ def script_view(server, script):
             latest_lines = latest_content.strip().splitlines()
             previous_lines = previous_content.strip().splitlines() if previous_content else []
 
+            reader = csv.reader(latest_lines)
+            parsed_output = list(reader)
+
             from difflib import unified_diff
             diff = unified_diff(previous_lines, latest_lines, fromfile='previous', tofile='latest', lineterm='')
             diff_output = '\n'.join(diff)
@@ -67,8 +72,9 @@ def script_view(server, script):
     return render_template("script.html",
                            server=server,
                            script=script,
-                           output=latest_content,
                            extension=ext,
+                           parsed_output=parsed_output,
+                           raw_output=latest_content,
                            diff=diff_output)
 
 if __name__ == "__main__":

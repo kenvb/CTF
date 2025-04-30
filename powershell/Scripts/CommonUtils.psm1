@@ -52,6 +52,16 @@ function Save-ResultToFile {
         [string]$ScriptName,
         [string]$Result
     )
+    if ($Result -is [string] -and $Result.Trim() -match '^[A-Za-z0-9+/=]{16,}$') {
+        try {
+            $bytes = [System.Convert]::FromBase64String($Result.Trim())
+            $decoded = [System.Text.Encoding]::UTF8.GetString($bytes)
+            $Result = $decoded
+        } catch {
+            Write-Warning "Failed to decode Base64, saving raw result."
+        }
+    }
+
 
     $extension = 'txt'
 
