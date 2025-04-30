@@ -15,13 +15,14 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "Output")
 
 def extract_timestamp(file_path):
     filename = os.path.basename(file_path)
-    match = re.search(r'-(\d{8}-\d{6})\.', filename)
+    match = re.search(r'(\d{8}-\d{6})', filename)
     if match:
         try:
             return datetime.strptime(match.group(1), "%Y%m%d-%H%M%S")
         except ValueError:
             pass
     return datetime.min
+
 
 @app.route("/")
 def index():
