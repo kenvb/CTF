@@ -60,6 +60,16 @@ def script_view(server, script):
     files = glob.glob(os.path.join(script_dir, f"{script}-*.json")) + \
             glob.glob(os.path.join(script_dir, f"{script}-*.csv"))
     files = sorted(files, key=extract_timestamp)
+    print("---- DEBUG INFO ----")
+    print("Script folder:", script_dir)
+    print("Found files:")
+    for f in files:
+        print("  ", os.path.basename(f), extract_timestamp(f))
+    print("Latest file:", os.path.basename(latest_file))
+    print("Previous file:", os.path.basename(previous_file) if previous_file else "None")
+    print("Extension:", ext)
+    print("---------------------")
+
 
     if len(files) == 0:
         abort(404)
