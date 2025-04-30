@@ -30,8 +30,23 @@ def script_view(server, script):
     if not os.path.isdir(script_dir):
         abort(404)
 
-    files = sorted(glob.glob(os.path.join(script_dir, f"{script}-*.json")) +
-                   glob.glob(os.path.join(script_dir, f"{script}-*.csv")))
+    # Get all matching files
+    files = glob.glob(os.path.join(script_dir, f"{script}-*.json")) + \
+            glob.glob(os.path.join(script_dir, f"{script}-*.csv"))
+
+    # Sort them based on timestamp in filename
+    def extract_timestamp(file_path):
+        filename = os.path.basename(file_path)
+        match = re.search(r'-(\d{8}-\d{6})\.', filename)
+        if match:
+            try:
+                return datetime.strptime(match.group(1), "%Y%m%d-%H%M%S")
+            except ValueError:
+                pass
+        return datetime.min
+
+    files = sorted(files, key=extract_timestamp)
+
     if len(files) == 0:
         abort(404)
 
@@ -76,6 +91,5 @@ def script_view(server, script):
                            parsed_output=parsed_output,
                            raw_output=latest_content,
                            diff=diff_output)
-
 if __name__ == "__main__":
     app.run(debug=True)
