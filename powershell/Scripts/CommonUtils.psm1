@@ -70,12 +70,14 @@ function Save-ResultToFile {
     $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
     $fileName = "$safeScriptName-$timestamp.$extension"
 
-    $outputDir = Join-Path -Path "." -ChildPath "output\$ServerName"
-    if (-not (Test-Path -Path $outputDir)) {
-        New-Item -Path $outputDir -ItemType Directory | Out-Null
+    $baseDir = Join-Path -Path ".\Output" -ChildPath $ServerName
+    $scriptDir = Join-Path -Path $baseDir -ChildPath $ScriptName
+    if (-not (Test-Path -Path $scriptDir)) {
+        New-Item -Path $scriptDir -ItemType Directory | Out-Null
     }
 
-    $filePath = Join-Path -Path $outputDir -ChildPath $fileName
+    $filePath = Join-Path -Path $scriptDir -ChildPath $filename
+
     $Result | Out-File -FilePath $filePath -Encoding UTF8
 
     Write-Host "Result saved to: $filePath" -ForegroundColor Green
