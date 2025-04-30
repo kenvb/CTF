@@ -41,11 +41,11 @@ function Get-NetworkInfo {
         } else {
             # For CSV, flatten data into sections
             $outData = @()
-            $outData += "# IPAddresses"
+            $outData += "IPAddresses"
             $outData += ($ipAddresses | ConvertTo-Csv -NoTypeInformation)
-            $outData += "# RoutingTable"
+            $outData += "RoutingTable"
             $outData += ($routes | ConvertTo-Csv -NoTypeInformation)
-            $outData += "# ListeningPorts"
+            $outData += "ListeningPorts"
             $outData += ($listeningPorts | ConvertTo-Csv -NoTypeInformation)
         }
     }

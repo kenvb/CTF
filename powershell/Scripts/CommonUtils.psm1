@@ -1,3 +1,15 @@
+function IsValidJson {
+    param (
+        [string]$JsonString
+    )
+    try {
+        $null = $JsonString | ConvertFrom-Json -ErrorAction Stop
+        return $true
+    } catch {
+        return $false
+    }
+}
+
 function Show-ConsolePreview {
     param (
         [Parameter(Mandatory=$true)]
@@ -36,49 +48,37 @@ function Get-SafeTimestamp {
 
 function Save-ResultToFile {
     param (
-        [Parameter(Mandatory = $true)] $Result,
-        [Parameter(Mandatory = $true)] [string]$ServerName,
-        [Parameter(Mandatory = $true)] [string]$ScriptName,
-        [Parameter(Mandatory = $true)] [string]$Timestamp
+        [string]$ServerName,
+        [string]$ScriptName,
+        [string]$Result
     )
 
-    $OutputFormat = "json"
-    if ($Result -is [hashtable] -and $Result.ContainsKey("OutputFormat")) {
-        $OutputFormat = $Result.OutputFormat.ToLower()
-        $Result = $Result.Data
-    }
+    $extension = 'txt'
 
-    if ($Result -is [string] -and $Result -match '^[A-Za-z0-9+/=]{20,}$') {
-        try {
-            $Result = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Result))
-        } catch {
-            Write-Warning "Failed to decode Base64 result. Saving raw."
+    if ($Result -is [string]) {
+        $trimmed = $Result.Trim()
+
+        if (IsValidJson $trimmed) {
+            $extension = 'json'
+        }
+        else {
+            $extension = 'csv'
         }
     }
 
-    $baseDir = Join-Path -Path ".\Output" -ChildPath $ServerName
-    $scriptDir = Join-Path -Path $baseDir -ChildPath $ScriptName
-    if (-not (Test-Path $scriptDir)) {
-        New-Item -ItemType Directory -Path $scriptDir -Force | Out-Null
+    $safeScriptName = ($ScriptName -replace '[\/:*?"<>|]', '-').Replace('.ps1','')
+    $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+    $fileName = "$safeScriptName-$timestamp.$extension"
+
+    $outputDir = Join-Path -Path "." -ChildPath "output\$ServerName"
+    if (-not (Test-Path -Path $outputDir)) {
+        New-Item -Path $outputDir -ItemType Directory | Out-Null
     }
 
-    $extension = if ($OutputFormat -eq "csv") { "csv" } else { "json" }
-    $filename = "${ScriptName}-${Timestamp}.${extension}"
-    $outputPath = Join-Path -Path $scriptDir -ChildPath $filename
+    $filePath = Join-Path -Path $outputDir -ChildPath $fileName
+    $Result | Out-File -FilePath $filePath -Encoding UTF8
 
-    try {
-        switch ($extension) {
-            "json" {
-                $Result | Out-File -FilePath $outputPath -Encoding UTF8
-            }
-            "csv" {
-                $Result | Out-File -FilePath $outputPath -Encoding UTF8
-            }
-        }
-        Write-Host "Saved result to $outputPath" -ForegroundColor Green
-    } catch {
-        Write-Warning "Failed to save result for $ScriptName on $ServerName\: $_"
-    }
+    Write-Host "Result saved to: $filePath" -ForegroundColor Green
 }
 
 function Connect-RemoteServers {
