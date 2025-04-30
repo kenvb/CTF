@@ -3,13 +3,25 @@ import os
 import json
 import csv
 import glob
+import re
 from datetime import datetime
 from deepdiff import DeepDiff
+from difflib import unified_diff
 
 app = Flask(__name__)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "Output")
+
+def extract_timestamp(file_path):
+    filename = os.path.basename(file_path)
+    match = re.search(r'-(\d{8}-\d{6})\.', filename)
+    if match:
+        try:
+            return datetime.strptime(match.group(1), "%Y%m%d-%H%M%S")
+        except ValueError:
+            pass
+    return datetime.min
 
 @app.route("/")
 def index():
@@ -21,8 +33,22 @@ def server_view(server):
     server_dir = os.path.join(OUTPUT_DIR, server)
     if not os.path.isdir(server_dir):
         abort(404)
+
     scripts = sorted(os.listdir(server_dir))
-    return render_template("server.html", server=server, scripts=scripts)
+    script_info = []
+
+    for script in scripts:
+        script_dir = os.path.join(server_dir, script)
+        files = glob.glob(os.path.join(script_dir, f"{script}-*.json")) + \
+                glob.glob(os.path.join(script_dir, f"{script}-*.csv"))
+        if files:
+            latest = max(files, key=extract_timestamp)
+            timestamp = extract_timestamp(latest)
+            script_info.append((script, timestamp))
+        else:
+            script_info.append((script, None))
+
+    return render_template("server_view.html", server=server, scripts=script_info)
 
 @app.route("/script/<server>/<script>")
 def script_view(server, script):
@@ -30,21 +56,8 @@ def script_view(server, script):
     if not os.path.isdir(script_dir):
         abort(404)
 
-    # Get all matching files
     files = glob.glob(os.path.join(script_dir, f"{script}-*.json")) + \
             glob.glob(os.path.join(script_dir, f"{script}-*.csv"))
-
-    # Sort them based on timestamp in filename
-    def extract_timestamp(file_path):
-        filename = os.path.basename(file_path)
-        match = re.search(r'-(\d{8}-\d{6})\.', filename)
-        if match:
-            try:
-                return datetime.strptime(match.group(1), "%Y%m%d-%H%M%S")
-            except ValueError:
-                pass
-        return datetime.min
-
     files = sorted(files, key=extract_timestamp)
 
     if len(files) == 0:
@@ -78,7 +91,6 @@ def script_view(server, script):
             reader = csv.reader(latest_lines)
             parsed_output = list(reader)
 
-            from difflib import unified_diff
             diff = unified_diff(previous_lines, latest_lines, fromfile='previous', tofile='latest', lineterm='')
             diff_output = '\n'.join(diff)
         except Exception as e:
@@ -91,5 +103,6 @@ def script_view(server, script):
                            parsed_output=parsed_output,
                            raw_output=latest_content,
                            diff=diff_output)
+
 if __name__ == "__main__":
     app.run(debug=True)

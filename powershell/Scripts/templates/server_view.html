@@ -4,9 +4,12 @@
 <h2>Scripts for {{ server }}</h2>
 <input class="form-control mb-3" id="scriptFilter" placeholder="Filter scripts...">
 <ul class="list-group" id="scriptList">
-    {% for script in scripts %}
-    <li class="list-group-item">
-        <a href="{{ url_for('script_view', server_name=server, script_name=script) }}">{{ script }}</a>
+    {% for script, timestamp in scripts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{{ url_for('script_view', server=server, script=script) }}">{{ script }}</a>
+        {% if timestamp %}
+        <span class="badge bg-secondary">{{ timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>
