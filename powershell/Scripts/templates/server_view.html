@@ -1,26 +1,46 @@
 {% extends "layout.html" %}
-{% block title %}Scripts for {{ server }}{% endblock %}
+{% block title %}Scripts on {{ server }}{% endblock %}
 {% block content %}
-<h2>Scripts for {{ server }}</h2>
-<input class="form-control mb-3" id="scriptFilter" placeholder="Filter scripts...">
-<ul class="list-group" id="scriptList">
-    {% for script, timestamp in scripts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="{{ url_for('script_view', server=server, script=script) }}">{{ script }}</a>
-        {% if timestamp %}
-        <span class="badge bg-secondary">{{ timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</span>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-<a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">← Back to servers</a>
+
+<div class="d-flex gap-2 mb-4">
+  <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to servers</a>
+</div>
+
+<h2 class="mb-4">Available script results on <strong>{{ server }}</strong></h2>
+
+<div class="table-responsive">
+  <table id="scriptTable" class="display stripe">
+    <thead>
+      <tr>
+        <th>Script</th>
+        <th>Latest Run</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in scripts %}
+        <tr>
+          <td>{{ item[0] }}</td>
+          <td>{{ item[1] }}</td>
+          <td>
+            <a href="{{ url_for('script_view', server=server, script=item[0]) }}" class="btn btn-sm btn-light">View Output</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
 <script>
-document.getElementById("scriptFilter").addEventListener("input", function() {
-    let filter = this.value.toLowerCase();
-    let items = document.querySelectorAll("#scriptList li");
-    items.forEach(item => {
-        item.style.display = item.textContent.toLowerCase().includes(filter) ? "" : "none";
+document.addEventListener("DOMContentLoaded", function () {
+  const table = document.getElementById("scriptTable");
+  if (table) {
+    $(table).DataTable({
+      pageLength: 100,
+      lengthMenu: [ [10, 25, 50, 100, 500], [10, 25, 50, 100, 500] ]
     });
+  }
 });
 </script>
+
 {% endblock %}

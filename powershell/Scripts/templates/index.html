@@ -1,22 +1,23 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Available Servers</title>
-    <style>
-        body { font-family: sans-serif; background: #f4f4f4; padding: 1em; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 0.5em 0; }
-        a { text-decoration: none; color: #0077cc; }
-        a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-<h1>Servers</h1>
-<ul>
-    {% for server in servers %}
-    <li><a href="{{ url_for('server_view', server=server) }}">{{ server }}</a></li>
-    {% endfor %}
-</ul>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Server Dashboard{% endblock %}
+{% block content %}
+
+<div class="text-center mb-5">
+  <h2 class="display-5">🧭 Server Dashboard</h2>
+  <p class="lead text-muted">Select a server to view available script outputs.</p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for server in servers %}
+    <div class="col">
+      <div class="card h-100 shadow-sm bg-secondary text-white">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h5 class="card-title">{{ server }}</h5>
+          <a href="{{ url_for('server_view', server=server) }}" class="btn btn-light mt-3">View {{ server }}</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+﻿"Name","Disabled","Lockout","PasswordRequired","PasswordExpires","LastLogon"
+"Administrator","True","False","True","False",
+"DefaultAccount","True","False","False","False",
+"Guest","True","False","False","False",
+"ken","False","False","True","True",
+"WDAGUtilityAccount","True","False","True","True",

@@ -3,7 +3,7 @@ function Get-PsLoggedOn {
     param(
         [Parameter()]
         [ValidateSet('CSV', 'JSON')]
-        [string]$OutputFormat = 'JSON',
+        [string]$OutputFormat = 'CSV',
 
         [switch]$ShowConsole
     )

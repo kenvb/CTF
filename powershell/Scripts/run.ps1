@@ -48,6 +48,9 @@ while ($true) {
                 if ($scriptName -eq "Get-Sigcheck") {
                     Copy-RemoteToolOnce -Session $session -ToolName "sigcheck.exe"
                 }
+                if ($scriptName -eq "Run-PrivescCheck") {
+                    Copy-RemoteToolOnce -Session $session -ToolName "PrivescCheck.ps1"
+                }
 
                 $scriptContent = Get-Content -Path $scriptPath -Raw
                 $Result = Invoke-Command -Session $session -ScriptBlock ([ScriptBlock]::Create($scriptContent)) -ErrorAction Stop

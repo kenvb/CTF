@@ -1,9 +1,11 @@
+
 from flask import Flask, render_template, send_file, abort
 import os
 import json
 import csv
 import glob
 import re
+import io
 from datetime import datetime
 from deepdiff import DeepDiff
 from difflib import unified_diff
@@ -22,7 +24,6 @@ def extract_timestamp(file_path):
         except ValueError:
             pass
     return datetime.min
-
 
 @app.route("/")
 def index():
@@ -57,11 +58,9 @@ def script_view(server, script):
     if not os.path.isdir(script_dir):
         abort(404)
 
-    # Find all matching files
     files = glob.glob(os.path.join(script_dir, f"{script}-*.json")) + \
             glob.glob(os.path.join(script_dir, f"{script}-*.csv"))
 
-    # DEBUG
     print("---- DEBUG ----")
     print("Script dir:", script_dir)
     print("Raw files found:")
@@ -73,20 +72,8 @@ def script_view(server, script):
         print("No files found.")
         abort(404)
 
-    # Sort using timestamp in filename
-    def extract_timestamp(file_path):
-        filename = os.path.basename(file_path)
-        match = re.search(r'(\d{8}-\d{6})', filename)
-        if match:
-            try:
-                return datetime.strptime(match.group(1), "%Y%m%d-%H%M%S")
-            except ValueError:
-                pass
-        return datetime.min
-
     files = sorted(files, key=extract_timestamp)
 
-    # Show after sorting
     print("Sorted files:")
     for f in files:
         print(" -", os.path.basename(f), extract_timestamp(f))
@@ -120,14 +107,21 @@ def script_view(server, script):
             latest_lines = latest_content.strip().splitlines()
             previous_lines = previous_content.strip().splitlines() if previous_content else []
 
-            reader = csv.reader(latest_lines)
-            parsed_output = list(reader)
+            sample = "\n".join(latest_lines[:5])
+            try:
+                dialect = csv.Sniffer().sniff(sample)
+            except csv.Error:
+                dialect = csv.excel  # fallback
+
+            print("Detected CSV delimiter:", repr(dialect.delimiter))
+
+            reader = csv.reader(io.StringIO(latest_content), dialect)
+            rows = list(reader)
+
+            parsed_output = rows
 
             diff = unified_diff(previous_lines, latest_lines, fromfile='previous', tofile='latest', lineterm='')
             diff_output = '\n'.join(diff)
-            print("=== DIFF OUTPUT ===")
-            print(diff_output[:500])  # show up to 500 characters
-            print("===================")
 
         except Exception as e:
             diff_output = f"[Error parsing CSV diff] {e}"
@@ -140,7 +134,6 @@ def script_view(server, script):
                            raw_output=latest_content,
                            diff=diff_output,
                            previous_file=previous_file)
-
 
 if __name__ == "__main__":
     app.run(debug=True)

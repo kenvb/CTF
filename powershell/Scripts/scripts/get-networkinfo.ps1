@@ -1,65 +1,119 @@
 <#
 .SYNOPSIS
-    Retrieves basic network information: IP addresses, routing table, and listening TCP ports.
+    Gathers network-related information and returns it as a base64-encoded CSV or JSON string.
+
 .DESCRIPTION
-    Captures network adapter IPs, current routing table, and open/listening TCP ports.
-    Returns results in CSV or JSON format, base64-encoded.
+    This script collects IP address configurations, routing table entries, and listening TCP ports.
+    It outputs the results in a base64-encoded CSV or JSON format, suitable for transport or storage.
+
 .PARAMETER OutputFormat
-    Specifies the output format: CSV (raw text) or JSON (parsed objects). Defaults to CSV.
+    Desired output format: CSV or JSON (default is CSV).
+
+.PARAMETER ShowConsole
+    Optionally prints the decoded output to the console.
+
 .EXAMPLE
-    Get-NetworkInfo -Verbose
-    Get-NetworkInfo -OutputFormat JSON -Verbose
+    .\Get-NetworkInfo.ps1 -OutputFormat CSV -ShowConsole
 #>
+
 function Get-NetworkInfo {
     [CmdletBinding()]
     param(
         [Parameter()]
         [ValidateSet('CSV','JSON')]
         [string]$OutputFormat = 'CSV',
+
         [switch]$ShowConsole
     )
 
     try {
-        # Get IP addresses (IPv4 and IPv6)
-        $ipAddresses = Get-NetIPAddress -AddressFamily IPv4, IPv6 -ErrorAction SilentlyContinue | Select-Object InterfaceAlias, IPAddress, AddressFamily
+        # Gather data
+        $ipAddresses = Get-NetIPAddress -AddressFamily IPv4, IPv6 -ErrorAction SilentlyContinue |
+            Select-Object InterfaceAlias, IPAddress, AddressFamily
 
-        # Get routing table
-        $routes = Get-NetRoute -ErrorAction SilentlyContinue | Select-Object InterfaceAlias, DestinationPrefix, NextHop, RouteMetric
+        $routes = Get-NetRoute -ErrorAction SilentlyContinue |
+            Select-Object InterfaceAlias, DestinationPrefix, NextHop, RouteMetric
 
-        # Get listening TCP ports
-        $listeningPorts = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Select-Object LocalAddress, LocalPort, OwningProcess
+        $listeningPorts = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue |
+            Select-Object LocalAddress, LocalPort, OwningProcess
 
-        # Structure into a single object
-        $networkInfo = [pscustomobject]@{
-            IPAddresses    = $ipAddresses
-            RoutingTable   = $routes
-            ListeningPorts = $listeningPorts
+        # Combine into unified CSV structure
+        $combined = @()
+
+        foreach ($entry in $ipAddresses) {
+            $combined += [pscustomobject]@{
+                InterfaceAlias    = $entry.InterfaceAlias
+                IPAddress         = $entry.IPAddress
+                AddressFamily     = $entry.AddressFamily
+                DestinationPrefix = ""
+                NextHop           = ""
+                RouteMetric       = ""
+                LocalAddress      = ""
+                LocalPort         = ""
+                OwningProcess     = ""
+                Section           = "IPAddresses"
+            }
         }
 
+        foreach ($entry in $routes) {
+            $combined += [pscustomobject]@{
+                InterfaceAlias    = $entry.InterfaceAlias
+                IPAddress         = ""
+                AddressFamily     = ""
+                DestinationPrefix = $entry.DestinationPrefix
+                NextHop           = $entry.NextHop
+                RouteMetric       = $entry.RouteMetric
+                LocalAddress      = ""
+                LocalPort         = ""
+                OwningProcess     = ""
+                Section           = "RoutingTable"
+            }
+        }
+
+        foreach ($entry in $listeningPorts) {
+            $combined += [pscustomobject]@{
+                InterfaceAlias    = ""
+                IPAddress         = ""
+                AddressFamily     = ""
+                DestinationPrefix = ""
+                NextHop           = ""
+                RouteMetric       = ""
+                LocalAddress      = $entry.LocalAddress
+                LocalPort         = $entry.LocalPort
+                OwningProcess     = $entry.OwningProcess
+                Section           = "ListeningPorts"
+            }
+        }
+
+        # Format output
         if ($OutputFormat -eq 'JSON') {
-            $outData = $networkInfo | ConvertTo-Json -Depth 5
-        } else {
-            # For CSV, flatten data into sections
-            $outData = @()
-            $outData += "IPAddresses"
-            $outData += ($ipAddresses | ConvertTo-Csv -NoTypeInformation)
-            $outData += "RoutingTable"
-            $outData += ($routes | ConvertTo-Csv -NoTypeInformation)
-            $outData += "ListeningPorts"
-            $outData += ($listeningPorts | ConvertTo-Csv -NoTypeInformation)
+            $networkInfo = [pscustomobject]@{
+                IPAddresses    = $ipAddresses
+                RoutingTable   = $routes
+                ListeningPorts = $listeningPorts
+            }
+
+            $outData = $networkInfo | ConvertTo-Json -Depth 4 | Out-String
         }
+        elseif ($OutputFormat -eq 'CSV') {
+            $outData = $combined | ConvertTo-Csv -NoTypeInformation | Out-String
+        }
+
+        # Encode as base64
+        $bytes = [System.Text.Encoding]::UTF8.GetBytes($outData)
+        $outData = [Convert]::ToBase64String($bytes)
+
+        # Optionally show result
+        if ($ShowConsole) {
+            [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($outData))
+        }
+
+        return $outData
     }
     catch {
-        $outData = (@{ Error = "Failed to retrieve network info: $($_.Exception.Message)" } | ConvertTo-Json -Depth 2)
+        Write-Error "An error occurred: $_"
     }
-    if ($ShowConsole) {
-        Show-ConsolePreview -Data $outData -Format $OutputFormat
-    }
-    
-
-    $bytes = [System.Text.Encoding]::UTF8.GetBytes(($outData -join "`n"))
-    [Convert]::ToBase64String($bytes)
 }
 
-# Example:
+# Call the function
 Get-NetworkInfo -Verbose
