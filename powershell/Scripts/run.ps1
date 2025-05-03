@@ -51,6 +51,9 @@ while ($true) {
                 if ($scriptName -eq "Run-PrivescCheck") {
                     Copy-RemoteToolOnce -Session $session -ToolName "PrivescCheck.ps1"
                 }
+                if ($scriptName -eq "PrivescCheck-Modular") {
+                    Copy-RemoteToolOnce -Session $session -ToolName "PrivescCheck-Modular.ps1"
+                }
 
                 $scriptContent = Get-Content -Path $scriptPath -Raw
                 $Result = Invoke-Command -Session $session -ScriptBlock ([ScriptBlock]::Create($scriptContent)) -ErrorAction Stop
